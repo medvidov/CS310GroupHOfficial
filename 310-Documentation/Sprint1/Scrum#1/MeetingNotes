@@ -1,18 +1,23 @@
-Meeting Question Notes:
 Who’s source code should we build off of? Should we mix code sources?
+
 We will be using Steven’s Maven project base and configuration but will Bram’s source code files will be integrated into the project base.
 What does “reorder lists” refer to? Is it a ranking system or just being able to switch the position of items?
 Implement a general idea of “reorder list” and find out what the stakeholders actually want during the sprint review 1.
+
 How should we delegate the workload?
+
 Pavle and Alec will take lead on the jUnit (white box testing) especially on the pagination and grocery list backlog before the next meeting. They will also work on cleaning up the documentation
 Adelayde and Steven will work on Cucumber (black box testing) especially on the pagination and grocery list backlog before the next meeting.
  Steven and Bram will focus on implementation especially on the pagination and grocery list backlog before the next meeting. 
 What features should we aim to complete during Sprint 1?
 All features except for 1 and 5. We may not successfully finish all of these features, but we will attempt to in order to get feedback on them during the review
+
 When can everyone meet next?
+
 Monday 3/25/19 in or after 310 class
 
 What have you accomplished before this meeting?
+
 Bram: I have looked over the sprint backlog and prioritized them based on the high importance and low importance.
 Addy: Setting up my Eclipse workspace
 Alec: Understanding the requirements for this sprint
@@ -20,6 +25,7 @@ Steven: Figuring out the formatting and information needed in this report
 Pavle: Outside work so I could give my full attention this project
 
 What do you want to accomplish during this meeting?
+
 Bram: To set up the github repository and get the project running for everyone.
 Addy: Get initial project running, discuss which items to start testing for
 Alec: Make sure our github repository is organized and set up for future scrums
@@ -27,6 +33,7 @@ Steven: Initialize the Github and discuss times for pair programming
 Pavle: Write some white box testing and documentation
 
 What do you wish to accomplish before the next meeting?
+
 Bram: Get the implementation for pagination and grocery list running after the white box 
 and black box test are done.
 Addy: Cucumber test for pagination and grocery list running
