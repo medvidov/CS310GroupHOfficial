@@ -1,0 +1,27 @@
+When can everyone meet next?
+
+Wednesday 3/27/19 in or after 310 class
+
+What have you accomplished before this meeting?
+
+Bram: I have been cleaning up the repository and documentation. Started to work on implementation of pagination and Grocery list.
+Addy: Started on cucumber tests for pagination, learning cucumber 
+Alec: Learning JUnit and making sure the project is working correctly on my machine to prepare for testing
+Steven: I have begun organizing the project (folders and dependencies)
+Pavle: Understanding the project
+
+What do you want to accomplish during this meeting?
+
+Bram: Making sure that everyone is on track on the project, and check if the JUnit and Cucumber test are done so that I could finish the implementation.
+Addy: Discuss what everyone is working on and set up dates for pair programming 
+Alec: Discuss future meetings and plan for when implementation and testing will be completed
+Steven: Discuss future meetings and set up dates for pair programming with Bram
+Pavle: Not present at meeting
+
+What do you wish to accomplish before the next meeting?
+
+Bram: Finish implementation on pagination and Grocery list and start to work on other backlog.
+Addy: Finish cucumber tests for pagination and grocery list 
+Alec: JUnit tests for pagination and grocery list
+Steven: Look over and begin implementation of reordering list
+Pavle: Begin JUnit tests and pair programming sessions
