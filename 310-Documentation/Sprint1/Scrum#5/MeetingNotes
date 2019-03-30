@@ -1,0 +1,34 @@
+When can everyone meet next?
+On Sunday, 11am at Cafe 84
+
+What have you accomplished before this meeting?
+
+Bram: I did a little bit of JUnit test case for set radius 
+Addy: Worked on getting cucumber tests up to date with previously written steps 
+Alec: Started JUnit tests on returning results from previous queries
+Steven: Studied jQuery
+Pavle: I wrote Cucumber features for the grocery list functionality
+ 
+What do you want to accomplish during this meeting?
+
+Bram: Complete implementation for radius boundaries
+Addy: Discuss next steps for pair programming tests for radius and reordering lists
+Alec: Finished JUnit tests for returning results from previous queries
+Steven: Finish reordering list pair programming
+Pavle: I would like to finish the step definitions for the grocery list Cucumber test
+
+What do you wish to accomplish before the next meeting?
+
+Bram: Work on some JUnit test for maintaining session data. 
+Addy: Testing for radius and reordering lists 
+Alec: Work on documentation for the sprint
+Steven: Finish simple design documentation
+Pavle: I would like to write step definitions for the previous query Cucumber test
+
+What is getting in your way of completing your task?
+
+Bram: Nothing right now
+Addy: Difficulty merging cucumber tests with previous groups cucumber step definitions
+Alec: Work in other classes is preventing me from spending more time on this project. 
+Steven: I am sick
+Pavle: I am not as knowledgeable as I would like about Cucumber, so I need to do more research to finish this task.
