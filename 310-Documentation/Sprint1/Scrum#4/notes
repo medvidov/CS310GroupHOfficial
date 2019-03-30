@@ -1,1 +1,23 @@
+What have you accomplished before this meeting?
 
+Bram: Pair programming for pagination with Addy
+Addy: Pair programming for pagination with Bram
+Alec: Learned JUnit testing and got familiar with how to cover all code with tests
+Steven: Clarified confusion on documentation 
+Pavle: Try to install Cucumber on my system
+ 
+What do you want to accomplish during this meeting?
+
+Bram: Set up pair programming meetups for the week
+Addy: Push code for pagination to github 
+Alec: Schedule pair programming, finish JUnit tests for new Java objects
+Steven: Figure out next meeting time and learn jQuery for reordering
+Pavle: Move testing environment into VM
+
+What do you wish to accomplish before the next meeting?
+
+Bram: Start JUnit and implementation for getting session data and storing session data
+Addy: Pair programming for grocery list testing  
+Alec: Finish JUnit tests for ToJson
+Steven: Look over and begin implementation of reordering list
+Pavle: Read documentation on Cucumber
