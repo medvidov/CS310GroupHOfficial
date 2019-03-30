@@ -72,11 +72,16 @@ public class ReturnResults extends HttpServlet {
 			
 			int size = temp.size();
 			
+			
+			
+			
+
 			for(int i = 0; i < size; i++) {
 				//System.out.println(temp.get(i).distance);	
 				if(temp.get(i).distance <= (rad * 1600)) {
 					restaurantResults.add(temp.get(i));
 				}
+				else {     }
 			}
 			
 			//for testing purposes

@@ -13,6 +13,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -57,18 +59,18 @@
         </div>
         <div class="row" style="padding-top: 50px;">
         <!-- content -->
-                <div class="container-fluid" id="listResult">
+                <div class="container-fluid foodstuff" id="listResult">
                 <!--  list results will be shown here -->
                 </div>
         
         </div>
     </div>
-    
+    <script src= "Functions.js"></script>
     <script>
     
     
   	//redirection from navbar
-	function toSearch(){
+	/* function toSearch(){
 		window.location.href = "Search.jsp";
 	}
 	function toResult(){
@@ -85,6 +87,16 @@
    	
    		return true;
 	}
+	
+	$(".foodstuff").sortable({
+		  
+		  axis: "y",
+		  revert: true,
+		  scroll: false,
+		  placeholder: "sortable-placeholder",
+		  cursor: "move"
+
+		});
     
 	//sending data to MoveListServlet to move items 
 	function mv(list2, itemType, index){
@@ -116,7 +128,7 @@
 		xhttp.send();	
 		return false;
     
-    }
+    } */
     
     	//get session do not show lists
 	    var restaurant = JSON.parse('<%= session.getAttribute("notRes") %>');
@@ -169,7 +181,7 @@
 	    		alt = "";
 	    	}
 	    	li.innerHTML += "<div class=\"row\"><div class=\"col-12 col-sm-8\"><!-- --><div class=\"" + alt + "\">"
-    	    + createRecipe(rec.recipeName, rec.rating, rec.prepTime, rec.cookTime, rec.price, num)
+    	    + createRecipe(rec.recipeName, rec.rating, rec.prepTime, rec.cookTime, rec.price, num, rec.uniqueID)
     	    + "</div><!-- --></div><div class=\"col-12 col-sm-4 mt-20\"><div><button class=\"btn btn-primary wth\" onclick=\"rm(\'recipe\',\'"+ i +"\')\">Remove</button>"
     	    + "</div><div class=\"mt-10\"><div class=\"dropdown\"><button class=\"btn btn-primary wth dropdown-toggle\" data-toggle=\"dropdown\">"
 			+ "Move To...</button><div class=\"dropdown-menu\"><button class=\"dropdown-item\" onclick=\"mv(\'favorite\',\'recipe\',\'"+ i +"\');\">Favorite</button>"
@@ -180,7 +192,7 @@
 	    
 	    
 	    //functions to create the recipe boxes in the html
-		function createRecipe(name, star, prep, cook, price, num){
+	/* 	function createRecipe(name, star, prep, cook, price, num, uniqueID){
             
             var div1 = document.createElement('div');
             
@@ -199,7 +211,7 @@
             h1.innerHTML = name;
             
             var link = document.createElement('a');
-            link.href = "Recipe.jsp?id=" + num;
+            link.href = "Recipe.jsp?id=" + uniqueID;
             link.appendChild(h1);
             
             div5.appendChild(link);
@@ -323,7 +335,7 @@
      		return div1.innerHTML;
         	
         }
-    
+     */
     
     </script>
 
