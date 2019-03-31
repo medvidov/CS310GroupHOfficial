@@ -1,37 +1,6 @@
 /**
  * 
  */
-	//sending data to MoveListServlet to move items 
-function mv(list2, itemType, index){
-
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function(){
-		if(this.readyState == 4 && this.status == 200){
-            location.reload();
-		}
-	}
-	xhttp.open("POST", "MoveListServlet?list1=not&list2=" + list2 + "&itemType=" + itemType + "&index=" + index, true);
-	xhttp.send();
-	
-	return false;
-
-}
-
-//sending data to RemoveListServlet to remove items
-function rm(itemType, index){
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function(){
-		if(this.readyState == 4 && this.status == 200){
-
-            location.reload();
-		}
-	}
-	
-	xhttp.open("POST", "RemoveListServlet?list=not&itemType=" + itemType + "&index=" + index, true);
-	xhttp.send();	
-	return false;
-
-}
 
 //functions to create the recipe boxes in the html
 function createRecipe(name, star, prep, cook, price, num, uniqueID){

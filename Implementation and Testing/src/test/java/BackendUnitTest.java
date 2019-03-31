@@ -1226,7 +1226,6 @@ public class BackendUnitTest {
   	        servlet.service(request, response);
   	        
   	        assertEquals(1, 1);
-  	    	
   	    }
   	    
 
@@ -1317,4 +1316,88 @@ public class BackendUnitTest {
   	    	ArrayList<String> test = n.getQueries();
   	    	assertEquals(1, 1);
   	    }
+  	    
+ 	    @Test
+  	    public void toJSONGetQueriesTest2() throws IOException, ServletException {
+  	    	ArrayList<Restaurant> rs = new ArrayList<Restaurant>();
+  	    	ArrayList<Recipe> rc = new ArrayList<Recipe>();
+  	    	ArrayList<String> images = new ArrayList<String>();
+  	    	Results r = new Results(rs, rc, images);
+  	    	String filename = "hamburger-5-10.0.json";
+  	    	ToJson n = new ToJson(r, filename);
+  			File list = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\queries.txt");
+  			list.delete();
+  	    	ArrayList<String> test = n.getQueries();
+  	    	assertEquals(1, 1);
+  	    }
+  	  
+  	  @Test
+      public void returnResultsServWithRadius1() throws IOException, ServletException {
+      	
+  		  ReturnResults servlet = new ReturnResults();
+      	
+          when(request.getParameter("query")).thenReturn("hamburger");
+          when(request.getParameter("options")).thenReturn("5");
+          when(request.getParameter("radius")).thenReturn("10.0");
+         
+          StringWriter sw = new StringWriter();
+          PrintWriter pw = new PrintWriter(sw);
+         
+          when(response.getWriter()).thenReturn(pw);
+             
+          servlet.service(request, response);
+          assertEquals(1, 1);
+      }
+  	  
+  	  @Before
+  	  public void testRadius() throws IOException, ServletException{
+  		  MockitoAnnotations.initMocks(this);
+  	     
+  		  request = Mockito.mock(HttpServletRequest.class);
+  		  response = Mockito.mock(HttpServletResponse.class);
+  		  session = Mockito.mock(HttpSession.class);
+
+  		  when(request.getSession()).thenReturn(session);
+  		  
+  		  session.setAttribute("radius", 100);
+  	  }
+  	 
+  	  @Test
+      public void returnResultsServWithRadius2() throws IOException, ServletException {
+      	
+  		  ReturnResults servlet = new ReturnResults();
+      	
+          when(request.getParameter("query")).thenReturn("hamburger");
+          when(request.getParameter("options")).thenReturn("5");
+          when(request.getParameter("radius")).thenReturn("10.0");
+         
+          StringWriter sw = new StringWriter();
+          PrintWriter pw = new PrintWriter(sw);
+          when(response.getWriter()).thenReturn(pw);
+                      
+          servlet.service(request, response);
+          assertEquals(1, 1);
+          session.setAttribute("radius", 100);
+          
+          ReturnResults servlet2 = new ReturnResults();
+        	
+          when(request.getParameter("query")).thenReturn("hamburger");
+          when(request.getParameter("options")).thenReturn("5");
+          when(request.getParameter("radius")).thenReturn("20.0");
+         
+          StringWriter sw2 = new StringWriter();
+          PrintWriter pw2 = new PrintWriter(sw2);
+          when(response.getWriter()).thenReturn(pw2);
+                       
+          servlet.service(request, response);
+          
+          assertEquals(1, 1);
+      }
+  	  
+  	  @Test
+  	  public void returnRestaurantString() throws IOException, ServletException {
+  		  Restaurant r = new Restaurant();
+  		  System.out.println(r);
+  	  }
+      
 }
