@@ -20,9 +20,7 @@ public class ToJson {
 	        //change this to your own path
 	        File file = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\" + filename);
 	        
-	        if(file.exists()) {
-	        	return;
-	        }
+	       
 	        
 	        File list = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\queries.txt");
 	        
