@@ -88,7 +88,7 @@
 		}
 		return true;
 	}
-
+	*/
     //sends the index of items and the list to move to MoveListSevlet
 	function mv(list2, itemType, index){
     	var xhttp = new XMLHttpRequest();
@@ -103,6 +103,7 @@
 		return false;
     
     }
+	/*
 	$(".foodstuff").sortable({
 		  
 		  axis: "y",
@@ -112,7 +113,7 @@
 		  cursor: "move"
 
 		});
-    
+    */
     //functions to remove item from the list, send index and itemtype to RemoveListServlet
 	function rm(itemType, index){
     	
@@ -130,7 +131,7 @@
 		return false;
     
     }
-     */
+    
     	//get session to explore lists
 	    var restaurant = JSON.parse('<%= session.getAttribute("expRes") %>');
 	    var s = ('<%= session.getAttribute("expRec") %>').replace(/\\n/g, "\\n")  

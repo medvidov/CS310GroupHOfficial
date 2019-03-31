@@ -97,7 +97,7 @@
 		  cursor: "move"
 
 		});
-    
+    */
 	//sending data to MoveListServlet to move items 
 	function mv(list2, itemType, index){
 
@@ -128,7 +128,7 @@
 		xhttp.send();	
 		return false;
     
-    } */
+    } 
     
     	//get session do not show lists
 	    var restaurant = JSON.parse('<%= session.getAttribute("notRes") %>');
