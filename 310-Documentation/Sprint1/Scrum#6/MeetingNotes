@@ -1,1 +1,34 @@
+Will you be present at the demo tomorrow at 5:30 (max 2 people)?
+Bram: Will be around in the beginning before the demo.
+Alec: No
+Addy: Yes
+Pavle: Yes
+Steven: No
 
+What have you accomplished before this meeting?
+Bram: Clean up the code and fix the bug for pagination implementation
+Alec: Added more to the documentation and cleaned it up for neater formatting.
+Addy: Pulled updated project and tests 
+Pavle: Tried new approaches to get Cucumber working outside of the VM.
+Steven: Clarified simple design and fixed remove and move list functionality
+
+What do you want to accomplish during this meeting?
+Bram: Get the demo working and be ready for the demo tomorrow.
+Alec: Get as many lines as possible covered by the JUnit tests
+Addy: Get project and all tests running correctly on my computer
+Pavle: Flesh out and finish tests for grocery list and previous queries.
+Steven: Tests the whole project to find bugs
+
+What do you wish to accomplish before the Sprint 1 demo?
+Bram: Finish documentation and clean up code. 
+Alec: There is still a couple lines left that need to be covered by JUnit tests such as error catching lines and such.
+Addy: Fix issues with cucumber tests and finish up all step definitions
+Pavle: Finish documentation and practice the demo.
+Steven: Draft a list of outstanding bugs
+
+What is getting in your way of completing this task?
+Bram: Nothing right now. 
+Alec: I don’t know how to create sophisticated JUnit tests so I have been trying to learn as I go
+Addy: Conflicts in the project pulled from github
+Pavle: Running into errors trying to work the demo
+Steven: The simple design requirements are vague
