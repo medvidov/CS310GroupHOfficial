@@ -55,10 +55,6 @@
                     <button class="btn btn-secondary wth" onclick="toSearch();">Back to Search</button>
 
                 </div>
-                <div class="mt-20">
-                    <button class="btn btn-secondary wth" onclick="reorder();">Reorder List</button>
-
-                </div>
 
             </div>
         </div>
@@ -101,7 +97,7 @@
 		  cursor: "move"
 
 		});
-    
+    */
     //send data to MoveListServlet to move items to another lists
     function mv(list2, itemType, index){
     	var xhttp = new XMLHttpRequest();
@@ -131,7 +127,7 @@
     	
 		return false;
     
-    } */
+    } 
     
   		//get session favorite lists
 	    var restaurant = JSON.parse('<%= session.getAttribute("favRes") %>');
