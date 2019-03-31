@@ -57,7 +57,7 @@
     
     //for redirection purposes 
     function toSearch(){
-		window.location.href = "Search.html";
+		window.location.href = "Search.jsp";
 	}
 	function toResult(){
 		window.location.href = "Results.jsp";

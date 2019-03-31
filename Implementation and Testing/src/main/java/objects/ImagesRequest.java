@@ -41,7 +41,7 @@ public class ImagesRequest {
 	
 	private void request() {
 		
-		String key = "AIzaSyDVrkr5Sc_8D_qn4BsUepbG43zdALq84II";
+		String key = "AIzaSyCNmUJm9BEKxTIiKKFqGYSktcXHFJXBkRw";
 		//String key = "AIzaSyCUBryJarHnnYvjEdJuI48R2ATEv3OvuP4"
 		
 		urlOfSearch = "https://www.googleapis.com/customsearch/v1?q=" + searchTerm + "&cx=010424164654780185781%3Adwdzcylugra&num=10&searchType=image&key=" + key;

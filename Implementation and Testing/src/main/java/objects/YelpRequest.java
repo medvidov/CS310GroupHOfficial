@@ -36,9 +36,9 @@ jsonObject jar: DOWNLOAD AT - https://mvnrepository.com/artifact/org.json/json/2
 */
 public class YelpRequest {
 	//Yelp API specific
-	public String clientID = "bmHLHijF54gd6VYAmCRgpg";
-	public String API_KEY = "rQ5uNphuvuAYuCeOb6UE27wKAstk_l8mar7oRkJViakWRkRekoQ6nB9GuxTP-Ll6soPa7is_j4dyxTufUDKbHvzZ30UwoNpUwk6UBY8SCzv2sXuZj6INml2_9PtxXHYx";
-	public String G_KEY = "AIzaSyC4fRNmsoDIjcC4YEAp7i-KPou2n-4_jMw";
+	public String clientID = "Ha-szwU6FOVD70nj30U72w";
+	public String API_KEY = "NugQtnUPuiELKUl3QTtuKw6ZgDIcvIeCMQDQyGVLfFlff8D-9cxLoFrzkiwMmj1FDgAntb9C_GFTPbo9IIbIg7SDrYjPtbDxysNz6gaQ_2MGMHc45R1SMyn3ATehXHYx";
+	public String G_KEY = "AIzaSyCNmUJm9BEKxTIiKKFqGYSktcXHFJXBkRw";
 	//General 
 	public String appName = "I'm Hungry";
 	
