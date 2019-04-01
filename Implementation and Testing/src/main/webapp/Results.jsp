@@ -133,10 +133,10 @@
                     </div>
                 </form>
                 <div class="mt-20">
-				<button class="btn btn-secondary wth" onclick="toGrocery();">Grocery List</button>
+				<button class="btn btn-secondary wth" id="grocery"onclick="toGrocery();">Grocery List</button>
 				</div>
                 <div class="mt-20">
-                    <button class="btn btn-secondary wth" onclick="toSearch();">Return to Search Page</button>
+                    <button class="btn btn-secondary wth" id="toSearch"onclick="toSearch();">Return to Search Page</button>
                 </div>
             </div>
         </div>
