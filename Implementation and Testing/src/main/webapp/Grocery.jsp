@@ -35,7 +35,7 @@
             <!--  navigation bar -->
             <div class="col-2">
                 <div class="mt-20">
-                    <button class="btn btn-secondary wth" onclick="toResult();">Back to Results</button>
+                    <button class="btn btn-secondary wth" id="results" onclick="toResult();">Back to Results</button>
                 </div>
                 <div class="mt-20">
                     <button class="btn btn-secondary wth" onclick="toSearch();">Back to Search</button>
