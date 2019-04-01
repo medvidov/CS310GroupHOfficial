@@ -46,7 +46,7 @@ public class PreviousQuery extends HttpServlet {
 		System.out.println(filename);
 		
 		ObjectMapper mapper = new ObjectMapper();
-		File file = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\" + filename + ".json");
+		File file = new File(filename + ".json");
 		Results myres = mapper.readValue(file, Results.class);
 		
 		

@@ -2,7 +2,7 @@ Feature: Previous Query
 
 Background: 
 	Given I am on the Search Page
-	And I search for Chicken
+	And I search for "Chicken"
 	And I want 5 results
 	And I want radius 10
 	And I clicked the Feed Me! button

@@ -6,6 +6,7 @@ Background:
 	And I want 5 results per page
 	And I want a radius of 10
 	And I clicked the "Feed Me!" button
+	Given I visit previous query "chicken-5-10.0"
 	
 Scenario: No food is in the grocery list
 	When I click the grocery list button

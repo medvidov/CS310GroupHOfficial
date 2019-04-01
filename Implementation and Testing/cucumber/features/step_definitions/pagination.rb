@@ -2,10 +2,14 @@ def full_path(page)
     return "localhost:8080/ImHungry2" + page
 end
 
-Given(/^I visit previous query$/) do
+Given(/^I visit previous query "([^"]*)"$/) do |arg|
 	visit full_path('/Search.jsp')
 	page.driver.browser.navigate.refresh
-	click_button('coffee-10-10.0')
+	click_button(arg)
+end
+
+When(/^I enter (\d+) into the number box$/) do |arg1|
+    page.fill_in 'num', with: arg1
 end
 
 Then(/^I should see buttons for pagination$/) do
@@ -23,16 +27,12 @@ Then(/^I should see the first five items$/) do
  	page.should have_content('Chocolate Coffee Kiss')
  	page.should have_content('Irish Coffee')
  	page.should have_content('Flavored Latte')
- 	page.should have_content('Simple Coffee Drink')
- 	page.should have_content('Cappuccino Cooler')
  	
  	#expected on next page
  	page.should have_no_content('Trojan Grounds')
  	page.should have_no_content('Starbucks')
  	page.should have_no_content('Ground Zero Performance Cafe')
  	page.should have_no_content('Fertitta Cafe')
- 	page.should have_no_content('Iced Mochas')
- 	page.should have_no_content('Easy Iced Coffee')
  	page.should have_no_content('Cold-Brewed Coffee')
  	page.should have_no_content('Pumpkin Spiced Latte')
  	page.should have_no_content('Bailey\'s Sundae Coffee Drink')
@@ -57,8 +57,6 @@ Then(/^I should see the next five items$/) do
  	page.should have_content('Fertitta Cafe')
  	page.should have_content('The Coffee Bean & Tea Leaf')
  	#expected recipes
- 	page.should have_content('Iced Mochas')
- 	page.should have_content('Easy Iced Coffee')
  	page.should have_content('Cold-Brewed Coffee')
  	page.should have_content('Pumpkin Spiced Latte')
  	page.should have_content('Bailey\'s Sundae Coffee Drink')
@@ -69,9 +67,7 @@ Then(/^I should see the next five items$/) do
  	page.should have_no_content('Literatea')
  	page.should have_no_content('The Cafe Feat Illy')
  	page.should have_no_content('Chocolate Coffee Kiss')
- 	page.should have_no_content('Irish Coffee')
  	page.should have_no_content('Flavored Latte')
  	page.should have_no_content('Simple Coffee Drink')
- 	page.should have_no_content('Cappuccino Cooler')
 end
 

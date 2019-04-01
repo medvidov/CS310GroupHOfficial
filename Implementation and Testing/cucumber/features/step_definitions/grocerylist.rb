@@ -11,7 +11,7 @@ And(/^I search for chicken$/) do
 end
 
 And(/^I want 5 results per page$/) do
-
+    
 end
 
 And(/^I want a radius of 10$/) do

@@ -2,6 +2,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -378,6 +381,17 @@ public class BackendUnitTest {
 		u.addRecipe(r, "explore");
 		u.moveRecipe("explore", "not", 0);
 		assertEquals(u.notRecipe.get(0).name,"name");
+	}
+	
+	@Test
+	public void addGroceries() {
+		User u = new User ();
+		ArrayList<String> ingre = new ArrayList<String>();
+		ingre.add("carrot");
+		Recipe r = new Recipe("name","imagelink","prep","cooktime", ingre, new ArrayList<String>(),"q",2.0);
+		r.name = "name";
+		u.addGrocery(r);
+		assertEquals(u.gList.gList.size(), 1);
 	}
 	
 	@Test
@@ -1104,6 +1118,15 @@ public class BackendUnitTest {
   		assertEquals(list.gList.size(), 1);
   	}
 
+  	@Test
+  	public void noFileToJson() throws IOException {
+  		ToJson b = new ToJson(new Results(), "a");
+  		File a = new File("queries.txt");
+  		a.delete();
+  		assertEquals(b.getQueries(), null);
+  		
+  		
+  	}
   	
   	//test AddToGrocery.java
   	//test Results.java
@@ -1155,7 +1178,9 @@ public class BackendUnitTest {
   	    
   	    @Test
   	    public void ToJsonTest() throws IOException, ServletException {
-  	    	
+  	    	File file = new File("queries.txt");
+  	    	ToJson b = new ToJson(new Results(), "asd");
+  	    	assertEquals(1,1);
   	    }
   	    
   	    //test GetQUeries
@@ -1166,9 +1191,9 @@ public class BackendUnitTest {
   	    public void testGetQueries() throws IOException, ServletException {
   	    	
   	    	ObjectMapper mapper = new ObjectMapper();
-  	    	File file = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\queries.txt");
+  	    	File file = new File("queries.txt");
   	    	file.delete();
-  	    	File list = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\queries.txt");
+  	    	File list = new File("queries.txt");
   	        ArrayList<String> queries = new ArrayList<String>();
   	        //if query list does not exist create it 
   	        
@@ -1192,7 +1217,7 @@ public class BackendUnitTest {
   	    @Test
   	    public void testNoPrevQueries() throws IOException, ServletException {
   	    	
-  	    	File file = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\queries.txt");
+  	    	File file = new File("queries.txt");
   	    	file.delete();
   	    	
   	    	GetQueries servlet = new GetQueries();
@@ -1204,7 +1229,7 @@ public class BackendUnitTest {
   	 
   	        servlet.service(request, response);
   	        
-  	        File newFile = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\queries.txt");
+  	        File newFile = new File("queries.txt");
   	        
   	        assertEquals(1, 1);
   	    }
@@ -1250,11 +1275,14 @@ public class BackendUnitTest {
   	    	String filename = "file.txt";
   	    	
   	    	
-  	        File file = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage" + filename);
+  	        File file = new File(filename);
   	    	
   	        ToJson n = new ToJson(r, filename);
   	    	assertEquals(1, 1);
   	    }
+  	    
+  	    
+  	    //test ToJSON
   	    
   	    @Test
   	    public void testToJSONObject() throws IOException, ServletException {
@@ -1264,7 +1292,7 @@ public class BackendUnitTest {
   	    	Results r = new Results(rs, rc, images);
   	    	String filename = "hamburger-5-10.0.json";
   	    	
-  	        File file = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage" + filename);
+  	        File file = new File(filename);
   	        file.delete();
   	    	ToJson n = new ToJson(r, filename);
   	    	assertEquals(1, 1);
@@ -1278,10 +1306,10 @@ public class BackendUnitTest {
   	    	Results r = new Results(rs, rc, images);
   	    	String filename = "hamburger-5-10.0.json";
   	    	
-  	        File file = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage" + filename);
+  	        File file = new File(filename);
   	        file.delete();
   	        
-  	        File list = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storagequeries.txt");
+  	        File list = new File("queries.txt");
   	        list.delete();
   	    	
   	        ToJson n = new ToJson(r, filename);
@@ -1296,10 +1324,10 @@ public class BackendUnitTest {
   	    	Results r = new Results(rs, rc, images);
   	    	String filename = "hamburger-5-10.0.json";
   	    	
-  	        File file = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage" + filename);
+  	        File file = new File(filename);
   	        file.delete();
   	        
-  	        File list = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storagequeries.txt");
+  	        File list = new File("queries.txt");
   	    	
   	        ToJson n = new ToJson(r, filename);
   	    	assertEquals(1, 1);
@@ -1313,20 +1341,6 @@ public class BackendUnitTest {
   	    	Results r = new Results(rs, rc, images);
   	    	String filename = "hamburger-5-10.0.json";
   	    	ToJson n = new ToJson(r, filename);
-  	    	ArrayList<String> test = n.getQueries();
-  	    	assertEquals(1, 1);
-  	    }
-  	    
- 	    @Test
-  	    public void toJSONGetQueriesTest2() throws IOException, ServletException {
-  	    	ArrayList<Restaurant> rs = new ArrayList<Restaurant>();
-  	    	ArrayList<Recipe> rc = new ArrayList<Recipe>();
-  	    	ArrayList<String> images = new ArrayList<String>();
-  	    	Results r = new Results(rs, rc, images);
-  	    	String filename = "hamburger-5-10.0.json";
-  	    	ToJson n = new ToJson(r, filename);
-  			File list = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\queries.txt");
-  			list.delete();
   	    	ArrayList<String> test = n.getQueries();
   	    	assertEquals(1, 1);
   	    }
@@ -1349,18 +1363,18 @@ public class BackendUnitTest {
           assertEquals(1, 1);
       }
   	  
-  	  @Before
-  	  public void testRadius() throws IOException, ServletException{
-  		  MockitoAnnotations.initMocks(this);
-  	     
-  		  request = Mockito.mock(HttpServletRequest.class);
-  		  response = Mockito.mock(HttpServletResponse.class);
-  		  session = Mockito.mock(HttpSession.class);
-
-  		  when(request.getSession()).thenReturn(session);
-  		  
-  		  session.setAttribute("radius", 100);
-  	  }
+//  	  @Before
+//  	  public void testRadius() throws IOException, ServletException{
+//  		  MockitoAnnotations.initMocks(this);
+//  	     
+//  		  request = Mockito.mock(HttpServletRequest.class);
+//  		  response = Mockito.mock(HttpServletResponse.class);
+//  		  session = Mockito.mock(HttpSession.class);
+//
+//  		  when(request.getSession()).thenReturn(session);
+//  		  
+//  		  session.setAttribute("radius", 100.0);
+//  	  }
   	 
   	  @Test
       public void returnResultsServWithRadius2() throws IOException, ServletException {
@@ -1376,28 +1390,18 @@ public class BackendUnitTest {
           when(response.getWriter()).thenReturn(pw);
                       
           servlet.service(request, response);
-          assertEquals(1, 1);
+         
           session.setAttribute("radius", 100);
-          
-          ReturnResults servlet2 = new ReturnResults();
         	
           when(request.getParameter("query")).thenReturn("hamburger");
           when(request.getParameter("options")).thenReturn("5");
           when(request.getParameter("radius")).thenReturn("20.0");
          
-          StringWriter sw2 = new StringWriter();
-          PrintWriter pw2 = new PrintWriter(sw2);
-          when(response.getWriter()).thenReturn(pw2);
-                       
+          when(response.getWriter()).thenReturn(pw);
+          
           servlet.service(request, response);
           
           assertEquals(1, 1);
       }
-  	  
-  	  @Test
-  	  public void returnRestaurantString() throws IOException, ServletException {
-  		  Restaurant r = new Restaurant();
-  		  System.out.println(r);
-  	  }
       
 }

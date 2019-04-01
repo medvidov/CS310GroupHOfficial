@@ -33,7 +33,7 @@ public class GetQueries extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 ObjectMapper mapper = new ObjectMapper();
 		 ArrayList<String> queries = null;
-		 File list = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\queries.txt");
+		 File list = new File("queries.txt");
 		  //if query list does not exist create it 
 	        if(!list.exists()) {
 	        	queries = null;

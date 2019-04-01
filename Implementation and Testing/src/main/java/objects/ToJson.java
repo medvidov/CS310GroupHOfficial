@@ -18,44 +18,32 @@ public class ToJson {
 	        ObjectMapper mapper = new ObjectMapper();
 
 	        //change this to your own path
-	        File file = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\" + filename);
+	        File file = new File( filename + ".json");
 	        
-	       
+	        if(file.exists()) {
+	        	return;
+	        }
 	        
-	        File list = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\queries.txt");
+	        File list = new File("queries.txt");
 	        
 	        //if query list does not exist create it 
 	        if(!list.exists()) {
 	        	queries = new ArrayList<String>();
-	        	queries.add(filename);
-	        	try {
-	        		mapper.writeValue(list, queries);
-	        	}
-	        	catch (IOException e) {
-	        		e.printStackTrace();
-	        	}
+	        	//queries.add(filename);
+	        	mapper.writeValue(list, queries);
 	        }
-	        else {
+	        //else {
 	        	queries = mapper.readValue(list, ArrayList.class);
 	        	if(!queries.contains(filename)) {
 	        		queries.add(filename);
 	        	}
-	        	try {
-	        		mapper.writeValue(list, queries);
-	        	}
-	        	catch (IOException e) {
-	        		e.printStackTrace();
-	        	}
-	        }
+	        	
+	        	mapper.writeValue(list, queries);
+	        //}
 	        
-	        try {
 	            // Serialize Java object info JSON file.
 	            mapper.writeValue(file, myres);
 	           
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	           
-	        }
 
 //	        try {
 //	            // Deserialize JSON file into Java object.
@@ -72,7 +60,7 @@ public class ToJson {
 	 public ArrayList<String> getQueries() throws JsonParseException, JsonMappingException, IOException {
 		 
 		 ObjectMapper mapper = new ObjectMapper();
-		 File list = new File("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\java\\storage\\queries.txt");
+		 File list = new File("queries.txt");
 		  //if query list does not exist create it 
 	        if(!list.exists()) {
 	        	return null;

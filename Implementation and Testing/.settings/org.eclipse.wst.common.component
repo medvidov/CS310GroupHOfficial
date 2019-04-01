@@ -8,9 +8,8 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
                 
-        <property name="context-root" value="ImHungry2"/>
-                
         <property name="java-output-path" value="/ImHungry2/target/classes"/>
+        <property name="context-root" value="ImHungry2"/>
             
     </wb-module>
     

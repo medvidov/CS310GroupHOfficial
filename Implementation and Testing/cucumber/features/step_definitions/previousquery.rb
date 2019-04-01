@@ -6,8 +6,8 @@ Given(/^I am on the Search Page$/) do
    visit 'http://localhost:8080/ImHungry2/Search.jsp'
 end
 
-And(/^I search for Chicken$/) do
-   fill_in 'query', with: 'Chicken'
+And(/^I search for "([^"]*)"$/) do |arg|
+   fill_in 'query', with: arg
 end
 
 And(/^I want 5 results$/) do
@@ -39,7 +39,8 @@ And(/^I should see "Seeds Marketplace"$/) do
 end
 
 When(/^I search again$/) do
-   find('#toSearch').click
+   visit 'http://localhost:8080/ImHungry2/Search.jsp'
+   page.driver.browser.navigate.refresh
 end
 
 Then(/^I should see my previous queries$/)do
