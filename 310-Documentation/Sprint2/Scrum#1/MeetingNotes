@@ -1,0 +1,23 @@
+When can we meet next?
+Saturday April 6, 2019, 12:00 PM in Cafe 84
+
+What did you accomplish before this meeting?
+Steven: Sprint Planning and Sprint Retrospective
+Addy: Review notes from the demo for tests that need to be updated.
+Bram: Review the Sprint planning and Sprint Retrospective. I also read through the Sprint backlog
+Pavle: Sprint Review and Retrospective and Sprint Planning. Committed the new backlog
+Alec: Figured out what we did wrong in our last sprint and determined how we need to improve our implementation and tests for this sprint.
+
+What did you accomplish during this meeting?
+Steven: We delegated the work and planned for the upcoming weeks
+Addy: Planned pair programming session for writing tests. 
+Bram: Understand my task to be done before the next meeting (UI for the website) and understand which of the sprint backlogs are delegated for me.
+Pavle: Researched possible black box tests for drag and drop functionality to reorder lists and determined that it was not realistic
+Alec: Task decomposition and figuring out who is going to do what for this sprint.
+
+What stands in your way of accomplishing your goals?
+Steven: A lot of outside class work and final projects
+Addy: Need to teach Alec cucumber
+Bram: A lot of homework and project outside of the class
+Pavle: Work and projects for other classes
+Alec: I need to learn cucumber testing.
