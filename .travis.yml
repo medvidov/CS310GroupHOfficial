@@ -11,6 +11,6 @@ branches:
   - master
 
 before_install:
-  - cd Implementation\ and\ Testing/src/test/java/
+  - cd Implementation\ and\ Testing/
 
 
