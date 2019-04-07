@@ -6,16 +6,28 @@ Background:
 	And I search for "coffee"
 	And I enter 10 into the number box
 	And I clicked the Feed Me! button
-	Given I visit previous query "coffee-10-10.0"
 	
 Scenario: Pagination CSS Features
-	Then I should see buttons for pagination
+	Then I should see buttons for restaurant pagination
+	And I should see buttons for recipe pagination
+	And I should see the first five items
 	And I should see the first five items
 
-Scenario: Switch pages next and previous
-	When I click "Next" 
-	Then I should be on page "2"
+Scenario Outline: Switch pages next and previous
+	When I click "Next" on list <list>
+	Then I should be on page "2" of list <list>
 	And I should see the next five items 
-	When I click "Previous"
-	Then I should be on page "1"
-	And I should see the first five items
+	When I click "Previous" on list <list>
+	Then I should be on page "1" of list <list>
+	And I should see the first five items in list <list>
+	When I click "Last" on list <list>
+	Then I should be on page "4" of list <list>
+	And I should only see five page buttons
+	When I click "First" on list <list>
+	Then I should be on page "1" of list <list>
+
+	Examples:
+	| list |
+	| "resPagination" |
+	| "recPagination" |
+	

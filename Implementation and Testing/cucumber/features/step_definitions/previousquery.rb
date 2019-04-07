@@ -10,13 +10,6 @@ And(/^I search for "([^"]*)"$/) do |arg|
    fill_in 'query', with: arg
 end
 
-And(/^I want 5 results$/) do
-
-end
-
-And(/^I want radius 10$/) do
-
-end
 
 And(/^I clicked the Feed Me! button$/) do
    find('#searchBtn').click
@@ -38,19 +31,31 @@ And(/^I should see "Seeds Marketplace"$/) do
  page.should have_content('Seeds Marketplace')
 end
 
-When(/^I search again$/) do
-   visit 'http://localhost:8080/ImHungry2/Search.jsp'
+When(/^I go to Results$/) do
+   visit 'http://localhost:8080/ImHungry2/Results.jsp'
    page.driver.browser.navigate.refresh
 end
 
 Then(/^I should see my previous queries$/)do
-   page.should have_content('Previous Queries:')
+   page.should have_content('Previous Queries')
 end
 
-When(/^I click on "Chicken-5-10.0"$/) do
-   click_button('Chicken-5-10.0')
+When(/^I click on "Chicken"$/) do
+   click_button('Chicken')
 end
 
 When(/^I should go to the results page$/) do
  page.should have_content('Results for Chicken')
+end
+
+Then(/^I should see previous queries in a scroll menu at the bottom$/) do
+    pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then(/^I should see a button with label "([^"]*)"$/) do |string|
+    pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then(/^I should see image for search "([^"]*)"$/) do |string|
+    pending # Write code here that turns the phrase above into concrete actions
 end

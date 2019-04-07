@@ -12,8 +12,12 @@ When(/^I enter (\d+) into the number box$/) do |arg1|
     page.fill_in 'num', with: arg1
 end
 
-Then(/^I should see buttons for pagination$/) do
-    expect(page).to have_css('.pagination')
+Then(/^I should see buttons for restaurant pagination$/) do
+    expect(page).to have_css('#resPagination')
+end
+
+Then(/^I should see buttons for recipe pagination$/) do
+    expect(page).to have_css('#recPagination')
 end
 
 Then(/^I should see the first five items$/) do
@@ -44,8 +48,6 @@ When(/^I click "([^"]*)"$/) do |arg1|
 end
 
 Then(/^I should be on page "([^"]*)"$/) do |arg1|
-	#text = page.find('li#page'+arg1+'.page-item.active').text
-    #assert_equal(text, arg1)
     page.has_css?('li#page'+arg1+'.page-item.active')
 end
 
@@ -71,3 +73,22 @@ Then(/^I should see the next five items$/) do
  	page.should have_no_content('Simple Coffee Drink')
 end
 
+When(/^I click "([^"]*)" on list "([^"]*)"$/) do |string, string2|
+    find('#'+string2+' > li.page-item', :text => string).click
+end
+
+Then(/^I should be on page "([^"]*)" of list "([^"]*)"$/) do |string, string2|
+    page.has_css?('li#page'+arg1+'.page-item.active')
+end
+
+Then(/^I should see the next five items in list "([^"]*)"$/) do |string|
+    pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then(/^I should see the first five items in list "([^"]*)"$/) do |string|
+    pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then(/^I should only see five page buttons$/) do
+    pending # Write code here that turns the phrase above into concrete actions
+end
