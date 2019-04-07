@@ -21,3 +21,27 @@ Scenario: Add food to grocery list
 	And I should see the grocery list button
 	When I click the grocery list button
 	Then I should see a recipe's groceries
+	
+Scenario: Duplicate ingredients will merge on the grocery list
+	When I click a recipe
+	And I add that recipe to my grocery list
+	And I add that recipe to my grocery list again
+	And I go to my grocery list
+	Then I should see the ingredients amounts added together in the grocery list
+
+Scenario: There will be a link to grocery list on every page
+	When I click a recipe
+	Then I should see a link to grocery list under list management
+	When I return to results
+	Then I should see a link to grocery list under list management
+	When I click a restaurant
+	Then I should see a link to grocery list under list management
+	When I visit favorites list
+	Then I should see a link to grocery list under list management
+	When I visit do not show list
+	Then I should see a link to grocery list under list management
+	When I visit to explore list
+	Then I should see a link to grocery list under list management
+	
+	
+	
