@@ -38,3 +38,11 @@ And(/^I should see Restaurants within radius (\d+)$/) do |arg|
     maxDistance = 11200/1.2/60
     #Need to get an array of the distances somehow
 end
+
+When(/^I enter ({float}) into the radius box$/) do |float|
+    fill_in 'radius', with: float
+end
+
+Then(/^an error message should appear on the results page$/) do
+    page.should have_content('No Restaurants within range!')
+end
