@@ -34,12 +34,13 @@ import objects.YelpRequest;
 import servlets.AddToGrocery;
 import servlets.AddToServlet;
 import servlets.GetQueries;
+import servlets.GroceryChecked;
 import servlets.MoveListServlet;
 import servlets.PreviousQuery;
 import servlets.RemoveListServlet;
 import servlets.ReturnResults;
 import servlets.ToList;
-import objects.GroceryList;
+import objects.Grocery;
 import objects.ImagesRequest;
 import objects.Recipe;
 import objects.RecipeRequest;
@@ -391,7 +392,7 @@ public class BackendUnitTest {
 		Recipe r = new Recipe("name","imagelink","prep","cooktime", ingre, new ArrayList<String>(),"q",2.0);
 		r.name = "name";
 		u.addGrocery(r);
-		assertEquals(u.gList.gList.size(), 1);
+		assertEquals(u.gList.size(), 1);
 	}
 	
 	@Test
@@ -513,6 +514,8 @@ public class BackendUnitTest {
     User newUser;
     ArrayList<Restaurant> resList;
     ArrayList<Recipe> recList;
+    ArrayList<String> imageList;
+    ArrayList<Grocery> gList;
 
     @Before
     public void runBeforeTestMethod() {
@@ -528,6 +531,12 @@ public class BackendUnitTest {
     	newUser = new User();
     	resList = new ArrayList<Restaurant>();
     	recList = new ArrayList<Recipe>();
+    	imageList = new ArrayList<String>();
+    	gList = new ArrayList<Grocery>();
+    	
+    	gList.add(new Grocery("1 teaspoon salt"));
+    	
+    	newUser.gList = gList;
    
     	//populate
     	Restaurant testRest = new Restaurant();
@@ -562,6 +571,8 @@ public class BackendUnitTest {
 		exploreRecipe.uniqueID = "5";
 		recList.add(notRecipe);
 		newUser.notRecipe.add(notRecipe);
+		
+		imageList.add("asdas");
 
 		session.setAttribute("resList", resList);
 		session.setAttribute("recList", recList);
@@ -1106,16 +1117,16 @@ public class BackendUnitTest {
   //test GroceryList.java
   	@Test
   	public void notNullGlist() {
-  		GroceryList list = new GroceryList();
-  		assertNotNull(list.gList);
+  		Grocery list = new Grocery("1 teaspoon salt");
+  		assertNotNull(list);
   	}
   	
   	@Test
   	public void addGlist() {
-  		GroceryList list = new GroceryList();
-  		list.gList.add("hello");
-  		assertEquals(list.gList.get(0),"hello");
-  		assertEquals(list.gList.size(), 1);
+  		Grocery list = new Grocery("1 teaspoon salt");
+  		assertEquals(list.amount,"1 teaspoon");
+  		assertEquals(list.str, "1 teaspoon salt");
+  		assertEquals(list.itemName, " salt ");
   	}
 
   	@Test
@@ -1186,33 +1197,8 @@ public class BackendUnitTest {
   	    //test GetQUeries
   	    
   	    
-  	    //file exists
-  	    @Test
-  	    public void testGetQueries() throws IOException, ServletException {
-  	    	
-  	    	ObjectMapper mapper = new ObjectMapper();
-  	    	File file = new File("queries.txt");
-  	    	file.delete();
-  	    	File list = new File("queries.txt");
-  	        ArrayList<String> queries = new ArrayList<String>();
-  	        //if query list does not exist create it 
-  	        
-          	queries = new ArrayList<String>();
-          	queries.add("hamburger-5-10.0.json");
-          	queries.add("hamburger-7-10.0.json");
-          	mapper.writeValue(list, queries);
-  	        	
-  	    	GetQueries servlet = new GetQueries();
-  	    	
-  	        StringWriter sw = new StringWriter();
-  	        PrintWriter pw = new PrintWriter(sw);
-  	         
-  	        when(response.getWriter()).thenReturn(pw);
-  	 
-  	        servlet.service(request, response);
-  	        
-  	        assertEquals(1, 1);
-  	    }
+  	    //file exist
+  	   
   	    
   	    @Test
   	    public void testNoPrevQueries() throws IOException, ServletException {
@@ -1241,7 +1227,7 @@ public class BackendUnitTest {
   	    	
   	    	PreviousQuery servlet = new PreviousQuery();
   	   	 
-  	        when(request.getParameter("filename")).thenReturn("hamburger-5-10.0");
+  	        when(request.getParameter("filename")).thenReturn("hamburger");
   	        
   	        StringWriter sw = new StringWriter();
   	        PrintWriter pw = new PrintWriter(sw);
@@ -1259,7 +1245,7 @@ public class BackendUnitTest {
   	    	ArrayList<Restaurant> rs = new ArrayList<Restaurant>();
   	    	ArrayList<Recipe> rc = new ArrayList<Recipe>();
   	    	ArrayList<String> images = new ArrayList<String>();
-  	    	Results r = new Results(rs, rc, images);
+  	    	Results r = new Results(rs, rc, images, 0.0, 0);
   	    	
   	    	Results blankR = new Results();
   	    	
@@ -1271,7 +1257,7 @@ public class BackendUnitTest {
   	    	ArrayList<Restaurant> rs = new ArrayList<Restaurant>();
   	    	ArrayList<Recipe> rc = new ArrayList<Recipe>();
   	    	ArrayList<String> images = new ArrayList<String>();
-  	    	Results r = new Results(rs, rc, images);
+  	    	Results r = new Results(rs, rc, images, 0.0, 0);
   	    	String filename = "file.txt";
   	    	
   	    	
@@ -1289,8 +1275,8 @@ public class BackendUnitTest {
   	    	ArrayList<Restaurant> rs = new ArrayList<Restaurant>();
   	    	ArrayList<Recipe> rc = new ArrayList<Recipe>();
   	    	ArrayList<String> images = new ArrayList<String>();
-  	    	Results r = new Results(rs, rc, images);
-  	    	String filename = "hamburger-5-10.0.json";
+  	    	Results r = new Results(rs, rc, images, 0.0, 0);
+  	    	String filename = "hamburger.json";
   	    	
   	        File file = new File(filename);
   	        file.delete();
@@ -1303,8 +1289,8 @@ public class BackendUnitTest {
   	    	ArrayList<Restaurant> rs = new ArrayList<Restaurant>();
   	    	ArrayList<Recipe> rc = new ArrayList<Recipe>();
   	    	ArrayList<String> images = new ArrayList<String>();
-  	    	Results r = new Results(rs, rc, images);
-  	    	String filename = "hamburger-5-10.0.json";
+  	    	Results r = new Results(rs, rc, images, 0.0, 0);
+  	    	String filename = "hamburger.json";
   	    	
   	        File file = new File(filename);
   	        file.delete();
@@ -1321,8 +1307,8 @@ public class BackendUnitTest {
   	    	ArrayList<Restaurant> rs = new ArrayList<Restaurant>();
   	    	ArrayList<Recipe> rc = new ArrayList<Recipe>();
   	    	ArrayList<String> images = new ArrayList<String>();
-  	    	Results r = new Results(rs, rc, images);
-  	    	String filename = "hamburger-5-10.0.json";
+  	    	Results r = new Results(rs, rc, images, 0.0, 0);
+  	    	String filename = "hamburger.json";
   	    	
   	        File file = new File(filename);
   	        file.delete();
@@ -1338,7 +1324,7 @@ public class BackendUnitTest {
   	    	ArrayList<Restaurant> rs = new ArrayList<Restaurant>();
   	    	ArrayList<Recipe> rc = new ArrayList<Recipe>();
   	    	ArrayList<String> images = new ArrayList<String>();
-  	    	Results r = new Results(rs, rc, images);
+  	    	Results r = new Results(rs, rc, images, 0.0, 0);
   	    	String filename = "hamburger-5-10.0.json";
   	    	ToJson n = new ToJson(r, filename);
   	    	ArrayList<String> test = n.getQueries();
@@ -1403,5 +1389,124 @@ public class BackendUnitTest {
           
           assertEquals(1, 1);
       }
+  	  
+  	  //test Grocery.java
+  	   @Test
+	  	public void compareGlist() {
+	  		Grocery list = new Grocery("salt and pepper");
+	  		list.compare(new Grocery("salt and pepper"));
+	  		assertEquals(list.str,"salt and pepper");
+	  		assertEquals(list.amount, "nothing");
+	  	}
+  	   
+  	 @Test
+  	public void compareWrongGlist() {
+  		Grocery list = new Grocery("salt and pepper");
+  		list.compare(new Grocery("salt and BOOM"));
+  		assertEquals(list.str,"salt and pepper");
+  		assertEquals(list.amount, "nothing");
+  	}
+  	 
+  	@Test
+  	public void compareNormalGlist() {
+  		Grocery list = new Grocery("1 teaspoon salt");
+  		list.compare(new Grocery("1 teaspoon salt"));
+  		assertEquals(list.str,"1 teaspoon plus 1 teaspoon  salt ");
+  		assertEquals(list.amount, "1 teaspoon plus 1 teaspoon");
+  		assertEquals(list.itemName, " salt ");
+  	}
+  	
+  	@Test
+  	public void compareFalseGlist() {
+  		Grocery list = new Grocery("1 teaspoon salt");
+  		list.compare(new Grocery("1 teaspoon pepper"));
+  		assertEquals(list.str,"1 teaspoon salt");
+  		assertEquals(list.amount, "1 teaspoon");
+  		assertEquals(list.itemName, " salt ");
+  	}
+  	
+  	//test user add the same grocery
+  	@Test
+  	public void addSameGlist() {
+  		Grocery list = new Grocery("1 teaspoon salt");
+  		User temp = new User();
+  		ArrayList<Grocery> a = new ArrayList<Grocery>();
+  		a.add(list);
+  		temp.gList = a;
+  		Recipe i = new Recipe();
+  		i.ingredients = new String[1];
+  		i.ingredients[0] = "1 teaspoon salt";
+  		temp.addGrocery(i);
+  		assertEquals(1, 1);
+  	}
+	  	
+  	//test restaurant java
+  	@Test
+  	public void nameRestaurant() {
+  		Restaurant temp = new Restaurant();
+  		assertEquals(temp.toString(), null);
+  	}
+	  	
+  	//test GetQueries.java
+  	@Test
+    public void withFile() throws IOException, ServletException {
+    	
+  		File please = new File("queries.txt");
+  		File yay = new File("hamburger.json");
+  		Results p = new Results(resList, recList, imageList, 10.0, 0);
+  		ObjectMapper mapper = new ObjectMapper();
+  		ArrayList<String> wow = new ArrayList<String>();
+  		wow.add("hamburger");
+  		mapper.writeValue(please, wow);
+  		mapper.writeValue(yay, p);
+  		GetQueries servlet = new GetQueries();
+    	
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+       
+    }
+  	
+  	//testing for GroceryChecked
+  	@Test
+    public void checked() throws IOException, ServletException {
+    	
+  		GroceryChecked servlet = new GroceryChecked();
+  		
+  		when(request.getParameter("id")).thenReturn("0");
+  		when(request.getParameter("check")).thenReturn("true");
+  		when(session.getAttribute("userObj")).thenReturn(newUser);
+  		
+    	
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+       
+    }
+  	
+  	@Test
+    public void notChecked() throws IOException, ServletException {
+    	
+  		GroceryChecked servlet = new GroceryChecked();
+  		
+  		when(request.getParameter("id")).thenReturn("0");
+  		when(request.getParameter("check")).thenReturn("false");
+  		when(session.getAttribute("userObj")).thenReturn(newUser);
+  		
+    	
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+       
+    }
       
 }
