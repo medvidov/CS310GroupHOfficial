@@ -1,11 +1,16 @@
 language: java
 
+jdk:
+  - oraclejdk8
+
+script: ant build
+
 # safelist
 branches:
   only:
   - master
 
 before_install:
-  - cd Implementation\ and\ Testing/src/test/java/ | ls
+  - cd Implementation\ and\ Testing/src/test/java/
 
 
