@@ -30,3 +30,9 @@ Scenario Outline: Search for valid radius
 		| radius |
 		| 1 |
 		| 10 |
+		
+Scenario: Radius is too small to have any restaurant results
+	When I enter "hamburger" into the search box
+	And I enter 0.1 into the radius box
+	And I click the "Feed Me!" button
+	Then an error message should appear on the results page
