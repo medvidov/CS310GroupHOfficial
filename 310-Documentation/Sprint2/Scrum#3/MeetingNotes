@@ -1,1 +1,23 @@
+When can we meet next?
+Wednesday, April 10th after class 
 
+What have you accomplished before this meeting?
+Alec: Cucumber test features and starting the step definitions
+Bram: learn firebase and authentication
+Adelayde: Cucumber testing for modern UI and pagination
+Pavle: Read more Travis CI documentation to figure out what’s wrong
+Steven: set up database tables
+
+What do you want to accomplish during this meeting?
+Steven: help Bram with Firebase
+Bram: set up database structure for firebase, distribute firebase accounts to teammates
+Adelayde: Not present at meeting
+Pavle: Make Travis CI build the project
+Alec: Plan pair programming sessions and next scrum meeting
+
+What stands in the way of completing your goal?
+Steven: An econ presentation Thursday
+Alec: Step definitions can be very time consuming
+Pavle: The backend testing file has errors
+Bram: Projects from other class and time management issues
+Adelayde: An upcoming test I have to study for
