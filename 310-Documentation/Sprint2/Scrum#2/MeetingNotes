@@ -1,1 +1,24 @@
+When can we meet next?
+Monday, April 8 during or after CS310 Class
+
+What did you accomplish before this meeting?
+Steven: relearn JDBC
+Addy: Made list of all cucumber tests that need to be written during this sprint
+Bram: Made a list of JUnit test that are necessary
+Pavle: I read some documentation on Travis CI.
+Alec: Learned cucumber testing and downloaded all of the necessary files to my computer
+
+What did you accomplish during this meeting?
+Steven: Set up database
+Addy: Worked on cucumber testing 
+Bram: Be aware of what cucumber tests are done so that I could prepare to work on the implementation.
+Pavle: I set up Travis CI on the repository after Steven transferred ownership to me. I then troubleshooted so that it would run.
+Alec: Finished all cucumber testing features and started on the step definitions
+
+What stands in your way of accomplishing your goals?
+Steven: I forgot JDBC
+Addy: The allrecipes website we scrape from keeps preventing me from getting recipes 
+Bram: Nothing right now
+Pavle: Travis is having some issues building our project at the moment.
+Alec: Step definitions take a long time to write and I am still learning how to do them
 
