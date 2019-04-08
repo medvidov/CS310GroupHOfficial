@@ -40,7 +40,6 @@ public class Restaurant extends Item implements Serializable{
 	@Override
 	public String toString() {
 		return name;
-		
 	}
 }
 

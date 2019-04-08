@@ -1,149 +1,56 @@
-/**
- * 
- */
+
 
 //functions to create the recipe boxes in the html
 function createRecipe(name, star, prep, cook, price, num, uniqueID){
-    
-    var div1 = document.createElement('div');
-    
-    
-    var div2 = document.createElement('div');
-    div2.classList.add("container");
-    
-    var div3 = document.createElement('div');
-    div3.classList.add("row");
-    
-    var div4 = document.createElement('div');
-    div4.classList.add("col-11");
-    
-    var div5 = document.createElement('div');
-    var h1 = document.createElement('h3');
-    h1.innerHTML = name;
-    
-    var link = document.createElement('a');
-    link.href = "Recipe.jsp?id=" + uniqueID;
-    link.appendChild(h1);
-    
-    div5.appendChild(link);
-    
-    var newDiv = document.createElement('div');
-    var h2 = document.createElement('h4');
-    if(star == 0){
-    	h2.innerHTML = "no rating";
-    }
-    else{
-    	h2.innerHTML = star + "&#9734";
-    }
-    newDiv.appendChild(h2);
-    
-    
-    var div6 = document.createElement('div');
-    var h3 =  document.createElement('h4');
-    h3.innerHTML = "Prep Time: " + prep;
-    h3.style.cssText = "float: left; margin-right: 20px;";
-    var h4 =  document.createElement('h4');
-    h4.innerHTML = "Cook Time: " + cook;
-    var clear = document.createElement('div');
-    clear.cssText = "clear: both";
-    div6.appendChild(h3);
-    div6.appendChild(h4);
-    div6.appendChild(clear);
-  
-    
-    div4.appendChild(div5);
-    div4.appendChild(newDiv);
-    div4.appendChild(div6);
-    
-    var div7 = document.createElement('div');
-    div7.className = " col-1 mt50";
-    var dollar = document.createElement('h3');
-    if(price == null){
-    	dollar.innerHTML = "$";
-    }
-    else{
-    	dollar.innerHTML = price;
-    }
-    div7.appendChild(dollar);
-    
-    div3.appendChild(div4);
-    div3.appendChild(div7);
-    
-    div2.appendChild(div3);
-    div1.appendChild(div2);
-    return div1.innerHTML;
+	
+	var page = Math.floor(num/5) + 1;
+	var display = "none";
+	if(page == 1){
+		display = "flex";
+	}
+	
+	//console.log("res" +page+ "-" + display);
+	
+	return "<div class=\"rec" + page + " card border-danger mb-3 z-depth-5\" style=\"height: 160px;display: "+ display + ";\">"
+	+ "<div class=\"card-header\"><a style=\"float: left\" href=\"Recipe.jsp?id=" + uniqueID + "\">"
+    + "<h3>" + name + "</h3></a><div style=\"float: left; margin-left: 50px;margin-top: 5px; font-size: 21px;\"><strong>"
+    + star + "<i class=\"fa fa-star\" aria-hidden=\"true\" style=\"color: mediumvioletred;\"></i>"
+    + "</strong></div></div><div class=\"card-body text-info\" style=\"font-size: 20px;\">"
+    + "<div class=\"container-fluid\"><div class=\"row\"><div class=\"col-10\"><div class=\"container-fluid\">"
+    + "<div class=\"row\"><div class=\"col-12 col-sm-6\"><div>Prep Time: " + prep + "</div></div>"
+    + "<div class=\"col-12 col-sm-6\"><div>Cook Time: " + cook + "</div></div></div></div></div>"
+    + "<div class=\"col-2\"><h3>" + star + "</h3></div></div></div></div></div>";
     
 }
 
 //function to create the restaurant boxes in the html
 function createRestaurant(name, star, dist, price, id, num, address){
 	
-	var div1 = document.createElement('div');
-    if(num % 2 == 0){
-    	div1.className = "alt ";
+	if(price == null){
+    	price = "$";
     }
-    else{
-    	div1.className = "";
-    }
-    
-    var div2 = document.createElement('div');
-    div2.classList.add("container");
-    
-    var div3 = document.createElement('div');
-    div3.classList.add("row");
-    
-    var div4 = document.createElement('div');
-    div4.classList.add("col-10");
-    
-    var div5 = document.createElement('div');
-    var h1 = document.createElement('h3');
-    h1.innerHTML = name;
-    
-    var link = document.createElement('a');
-    link.href = "Restaurant.jsp?id=" + id;
-    link.appendChild(h1);
-    
-    div5.appendChild(link);
-  
-    
-    var newDiv = document.createElement('div');
-    var h2 = document.createElement('h4');
-    if(star == 0){
-    	h2.innerHTML = "no rating";
-    }
-    else{
-    	h2.innerHTML = star + "&#9734";
-    }
-    newDiv.appendChild(h2);
-    
-   
-    var div6 = document.createElement('div');
-    var h3 =  document.createElement('h4');
-    h3.innerHTML = "Distance: " + dist + "<br>Address: " + address;
-    div6.appendChild(h3);
-  
-    
-    div4.appendChild(div5);
-    div4.appendChild(newDiv);
-    div4.appendChild(div6);
-    
-    var div7 = document.createElement('div');
-    div7.className = " col-2 mt50";
-    var dollar = document.createElement('h3');
-    if(price == null){
-    	dollar.innerHTML = "$";
-    }
-    else{
-    	dollar.innerHTML = price;
-    }
-    div7.appendChild(dollar);
-    
-    div3.appendChild(div4);
-    div3.appendChild(div7);
-    
-    div2.appendChild(div3);
-    div1.appendChild(div2);
-		return div1.innerHTML;
+	
+	
+	var page = Math.floor(num/5) + 1;
+	var display = "none";
+	if(page == 1){
+		display = "flex";
+	}
+	
+	//console.log("rec" +page+ "-" + display);
+	
+	return "<div class=\"res" + page + " card border-primary mb-3 z-depth-5\" style=\"height: 160px;display: " + display + ";\">" 
+	+ "<div class=\"card-header\">"
+	+ "<a style=\"float: left\" href=\"Restaurant.jsp?id=" + id + "\">"
+	+ "<h3>" + name + "</h3></a>"
+	+ "<div style=\"float: left; margin-left: 50px;margin-top: 5px; font-size: 21px;\"><strong>"
+	+ star + "<i class=\"fa fa-star\" aria-hidden=\"true\" style=\"color: mediumvioletred;\"></i>"
+	+ "</strong></div></div><div class=\"card-body text-info\"><div class=\"container-fluid\">"
+	+ "<div class=\"row\"><div class=\"col-10\"><h5 class=\"card-title\">Distance: " + dist + "</h5>"
+	+ "<p class=\"card-text\">" + address + "</p></div><div class=\"col-2\"><h3>" + price + "</h3>"
+	+ " </div></div></div></div></div>";
+	
+
 	
 }
 
@@ -155,25 +62,68 @@ function toResult(){
 	window.location.href = "Results.jsp";
 }
 
-//checking if redirection to list is legal
-function check(){
-		var list = document.getElementById("list").value;
-		if(list == null || list == "nil" || list == "not"){
-			
-			return false;
-		}
-	
-		return true;
+function getQueries() {
+
+    var xhttp = new XMLHttpRequest();
+    console.log("inside");
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+
+            var queries = JSON.parse('<%= session.getAttribute("queries") %>');
+            if (queries == null || !queries) {
+                return;
+            } else {
+                var q = document.getElementById('queries');
+                for (var i = 0; i < queries.length; i++) {
+                    var div = document.createElement('div');
+                    div.classList.add("col-3");
+                    div.innerHTML =
+                        //q.innerHTML += "<div class=\"col-3\">"
+                        "<form action=\"PreviousQuery\" method=\"POST\">" +
+                        "<input type=\"hidden\" name=\"filename\" value=\"" + queries[i] + "\"> " +
+                        "<button id=\"" + queries[i] + "\" class=\"btn btn-primary\">" + queries[i] + "</button></form></div>";
+                    q.appendChild(div);
+                }
+
+                //$('#queries').load(document.URL +  ' #queries');
+            }
+            console.log(q);
+        }
+    }
+    xhttp.open("GET", "GetQueries", false);
+    xhttp.send();
+
 }
 
-$(".foodstuff").sortable({
-	  
-	  axis: "y",
-	  revert: true,
-	  scroll: false,
-	  placeholder: "sortable-placeholder",
-	  cursor: "move"
+//get previous query
+//getQueries();
 
-	});
+function prevQuery(filename) {
+    var xhttp = new XMLHttpRequest();
+    console.log("inside-a");
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
 
+
+        }
+    }
+    xhttp.open("GET", "PreviousQuery?filename=" + filename, true);
+    xhttp.send();
+}
+
+// Add your javascript here
+
+$('#right-button').click(function() {
+    //event.preventDefault();
+    $('.scrollmenu').animate({
+        scrollLeft: "+=300px"
+    }, "fast");
+});
+
+$('#left-button').click(function() {
+    //event.preventDefault();
+    $('.scrollmenu').animate({
+        scrollLeft: "-=300px"
+    }, "fast");
+});
     

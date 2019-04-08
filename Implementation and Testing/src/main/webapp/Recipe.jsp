@@ -4,18 +4,20 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+	
     <title>Recipe Page</title>
 
     <!-- maxcdn -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
+
+
+    <script src="https://use.fontawesome.com/c3025a07db.js"></script>
 
     <!-- style  -->
     <link href="./css/main.css?version=5" rel="stylesheet">
@@ -26,31 +28,27 @@
     		window.location.href = "Results.jsp";
     	}
     
-    	//add items to grocery
-    	function AddToGrocery(){
-    		console.log("adding");
-    		
-  			var xhttp = new XMLHttpRequest();
-  			xhttp.onreadystatechange = function(){
-  				if(this.readyState == 4 && this.status == 200){
-  					
-  					var r = document.getElementById('response');
-					if(list == "favorite"){
-						list = "Favorite List";
-					}
-					else if(list == "explore"){
-						list = "To Explore List";
-					}
-					else{
-						list = "Do Not Show List";
-					}
-					r.innerHTML = "Added Ingredients to Grocery List";
-					document.getElementById('addGrocery').classList.replace('btn-secondary', 'btn-danger');
-  				}
-  			}
-  			xhttp.open("POST", "AddToGrocery?id=" + id, true);
+    	function tolist(list){
+    		var xhttp = new XMLHttpRequest();
+    			xhttp.onreadystatechange = function(){
+    				if(this.readyState == 4 && this.status == 200){
+    					if(list == 'favorite'){
+    						location.href = "Favorite.jsp";
+    					}
+    					else if(list == "explore"){
+    						location.href = "ToExplore.jsp";
+    					}
+    					else if(list == 'not'){
+    						location.href = "DoNotShow.jsp";
+    					}
+    					else{
+    						location.href = "Grocery.jsp";
+    					}
+    					
+    				}
+    			}
+    			xhttp.open("POST", "ToList?list=" + list, false);
       		xhttp.send();
-    		
     	}
     </script>
    
@@ -59,72 +57,97 @@
 
 <body>
 
-    <div class="container-fluid">
-        <div class="row ">
-            <div class="col-8">
-            	<!--  title -->
-                <div class="listTitle" style="margin-bottom: 50px;" id="title"></div>
-             </div>
-               <!-- navigation bar -->
-             <div col="col-4">
-                <div class="mt-20">
-                    <a href="javascript:window.print();"><button class="btn btn-secondary wth" >Printable View</button></a>
-                </div>
-                <div class="mt-20">
-                    <button class="btn btn-secondary wth" id="results" onclick="toResult();">Return To Results</button>
-                </div>
-                <form action="" onsubmit="return add();" method="get" id="myform">
-                    <div class="mt-20">
-                        <select name="list" class="btn bg-secondary wth" id="list">
-                            <option value="nil" selected></option>
-                            <option value="favorite">Favorite List</option>
-                            <option value="explore">To Explore List</option>
-                            <option value="not">Do Not Show List</option>
-                        </select>
+    
+    <div id="back"></div>
+
+	<!--  navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="Search.jsp">I'm Hungry</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="Results.jsp">Results</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Lists Management
+                    </a>
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <button class="dropdown-item" id="favorite" onclick="tolist('favorite');">Favorite List</button>
+                        <button class="dropdown-item" id="explore" onclick="tolist('explore');">To Explore List</button>
+                        <button class="dropdown-item" id="not" onclick="tolist('not');">Do Not Show List</button>
+                        <button class="dropdown-item" id="grocery"onclick="tolist('grocery');">Grocery List</button>
                     </div>
-                    <div class="mt-20">
-                        <button class="btn btn-secondary wth" type="submit">Add to List</button>
-                    </div>
-                </form>
-                <div class="mt-20">
-                    <button class="btn btn-secondary " style="width:200px;" onclick="AddToGrocery();" id="addGrocery">Add to Grocery List</button>
-                </div>
-				<div id="response" style="margin-top: 20px;color: red; width: 150px;"></div>
-            </div>
+                </li>
+            </ul>
         </div>
+    </nav>
     
       
-      <div class="row" style="margin-left: 5px; margin-bottom: 10px; margin-top: 10px;">
-      
-                <!-- content -->
-                <img id="image" src="" width="200">
-                <div style="font-size: 20px;">
-                    <div class="mt-20" id="prep">
-                        <!-- show prep time here -->
+     <div class="container-fluid">
+
+        <div class="row text-center justify-content-center">
+            <div class="col-8">
+                <div class="listTitle" id="title" style="font-weight: bold;font-size: 5vw;">Feta-Stuffed Hamburgers</div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12  col-md-4">
+                            <a href="javascript:window.print();"><button class="btn btn-info wth">Printable View</button></a>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <button class="btn btn-info " style="width:200px;" onclick="AddToGrocery();" id="addGrocery">Add to Grocery List</button>
+                        </div>
+                        <div class="col-12 col-md-4">
+                           <div class="dropdown">
+							  <button class="btn btn-info dropdown-toggle" type="button" id="addTo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    Add To List
+							  </button>
+							  <div class="dropdown-menu" aria-labelledby="addTo">
+							    <button class="dropdown-item"  onclick="add('favorite');">Favorite List</button>
+							    <button class="dropdown-item" onclick="add('explore');">To Explore List</button>
+							    <button class="dropdown-item" onclick="add('not');">Do Not Show List</button>
+							  </div>
+							</div>
+                        </div>
                     </div>
-                    <div class="mt-20" id="cook">
-              			<!--  show cook time here -->
-                    </div>
-                    <div class="mt-20" id="ingredients">
-						<!--  show ingredients here -->
-                    </div>
-                    <div class="mt-20" id="instructions">
- 						<!-- show instructions here -->
+                    <div class="text-center"  id="response" style="margin-top: 20px; color: red;">
                     </div>
                 </div>
+            </div>
+        </div>
+
+
+
+        <div class="row justify-content-center text-center" style="margin-left: 5px; margin-bottom: 10px; margin-top: 10px;">
+
+            <!-- content -->
+            <img id="image" src="" width="500">
+            <div style="font-size: 20px;">
+                <div class="mt-20" id="prep"></div>
+                <div class="mt-20" id="cook"></div>
+                <div class="mt-20" id="ingredients">
+                    <!--  show ingredients here -->
+                    
+                </div>
+                <div class="mt-20" id="instructions">
+                    <!-- show instructions here -->
+                   
+                </div>
+            </div>
 
             <!-- end of content -->
-	</div>
+        </div>
 
-	</div>
+    </div>
     
     
     <script>
        //change this
       //this sends the id of recipe and which list to add it to the AddToServlet
-    	function add(){
-    		
-    		var list = document.getElementById("list").value;
+    	function add(list){
     		if(list == null || list == "nil"){
     			return false;
     		}
@@ -155,11 +178,11 @@
     	}
       
       	//this prevents reloading when submitting forms
-    	var form = document.getElementById("myform"); 
-    	function handleForm(event) { 
-    		event.preventDefault(); 
-    	} 
-    	form.addEventListener('submit', handleForm);
+    	//var form = document.getElementById("myform"); 
+    	//function handleForm(event) { 
+    	//	event.preventDefault(); 
+    	//} 
+    	//form.addEventListener('submit', handleForm);
       
     	
     	//get the id of recipe
@@ -218,7 +241,22 @@
 			instr.appendChild(li);
 		}
 	
-
+		//add items to grocery
+    	function AddToGrocery(){
+    		
+  			var xhttp = new XMLHttpRequest();
+  			xhttp.onreadystatechange = function(){
+  				if(this.readyState == 4 && this.status == 200){
+  					
+  					var r = document.getElementById('response');
+					r.innerHTML = "Added Ingredients to Grocery List";
+					document.getElementById('addGrocery').classList.replace('btn-info', 'btn-danger');
+  				}
+  			}
+  			xhttp.open("POST", "AddToGrocery?id=" + id, true);
+      		xhttp.send();
+    		
+    	}
     
     </script>
 

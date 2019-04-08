@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
+import objects.Results;
+
 /**
  * Servlet implementation class GetQueries
  */
@@ -33,6 +35,8 @@ public class GetQueries extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 ObjectMapper mapper = new ObjectMapper();
 		 ArrayList<String> queries = null;
+		 ArrayList<String> images = new ArrayList<String>();
+	     Results temp = null;
 		 File list = new File("queries.txt");
 		  //if query list does not exist create it 
 	        if(!list.exists()) {
@@ -40,14 +44,24 @@ public class GetQueries extends HttpServlet {
 	        }
 	        else {
 	        	queries = mapper.readValue(list, ArrayList.class);
+	        	 for(int i = 0; i < queries.size(); i++) {
+	 	        	File getImage = new File(queries.get(i) + ".json");
+	 	        	temp = mapper.readValue(getImage, Results.class);
+	 	        	images.add(temp.imageList.get(0));
+	 	        }
 	        }
+	        
+	        
+	       
+	       
 	        
 	        HttpSession session = request.getSession();
 	    	Gson gson = new Gson();
 			String queriesJSON = gson.toJson(queries);
+			String imagesJSON = gson.toJson(images);
 			
-		
 	        session.setAttribute("queries", queriesJSON);
+	        session.setAttribute("imageQueries", imagesJSON);
 		
 	}
 

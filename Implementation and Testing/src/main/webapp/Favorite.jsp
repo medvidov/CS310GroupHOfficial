@@ -2,82 +2,104 @@
 
 <head>
 
+	
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Favorite List</title>
 
     <!-- maxcdn -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+
+    <script src="https://use.fontawesome.com/c3025a07db.js"></script>
+
     <!-- style  -->
     <link href="./css/main.css?version=5" rel="stylesheet">
-   
+   <style>
+   .btn {
+            border: 1px solid black;
+        }
+   </style>
+   <script>
+   function tolist(list){
+		var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200){
+					if(list == 'favorite'){
+						location.href = "Favorite.jsp";
+					}
+					else if(list == "explore"){
+						location.href = "ToExplore.jsp";
+					}
+					else if(list == 'not'){
+						location.href = "DoNotShow.jsp";
+					}
+					else{
+						location.href = "Grocery.jsp";
+					}
+					
+				}
+			}
+			xhttp.open("POST", "ToList?list=" + list, false);
+ 		xhttp.send();
+	}
+   </script>
 
 </head>
 
 <body>
+	<div id="back"></div>
 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="Search.jsp">I'm Hungry</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="Results.jsp">Results</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Lists Management
+                    </a>
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <button class="dropdown-item" id="favorite" onclick="tolist('favorite');">Favorite List</button>
+                        <button class="dropdown-item" id="explore" onclick="tolist('explore');">To Explore List</button>
+                        <button class="dropdown-item" id="not" onclick="tolist('not');">Do Not Show List</button>
+                        <button class="dropdown-item" id="grocery"onclick="tolist('grocery');">Grocery List</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- end of navbar -->
+    
     <div class="container-fluid">
-        <div class="row ">
-            <div class="col-10">
+    	<div class="text-center">
             <!--  title -->
-                <div class="listTitle text-center" style="margin-bottom: 150px;">Favorites List</div>
-
-            </div>
-            <!--  navigation bar -->
-            <div class="col-2">
-                <form action="ToList" onsubmit="return check();" method="get">
-                    <div class="mt-20">
-                        <select name="list" class="btn bg-secondary wth" id="list">
-                            <option value="nil" selected></option>
-                            <option value="favorite">Favorite List</option>
-                            <option value="explore">To Explore List</option>
-                            <option value="not">Do Not Show List</option>
-                        </select>
-                    </div>
-                    <div class="mt-20">
-                        <button class="btn btn-secondary wth" type="submit">Manage List</button>
-                    </div>
-                </form>
-                <div class="mt-20">
-                    <button class="btn btn-secondary wth" onclick="toResult();">Back to Results</button>
-                </div>
-                <div class="mt-20">
-                    <button class="btn btn-secondary wth" onclick="toSearch();">Back to Search</button>
-
-                </div>
-
-            </div>
+            <div class="listTitle" style="font-weight: bold;font-size: 7vw;">Favorites List</div>
         </div>
         <div class="row" style="padding-top: 50px;">
         <!-- content -->
-                <div class="container-fluid foodstuff" id="listResult">
-                	<!-- this is where the items will be shown -->
+                <div class="container-fluid" id="listResult">
 
                 </div>
         </div>
     </div>
+    
+    
     <script src= "Functions.js"></script>
     <script>
-    
-   /*  //for redirection purposes 
-    function toSearch(){
-		window.location.href = "Search.jsp";
-	}
-	function toResult(){
-		window.location.href = "Results.jsp";
-	}
-	
-	//check if moving to another list is legal
+  //check if moving to another list is legal
 	function check(){
 		var list = document.getElementById("list").value;
 		if(list == null || list == "nil" || list == "favorite"){
@@ -88,23 +110,20 @@
 		return true;
 
 	}
-	$(".foodstuff").sortable({
-		  
-		  axis: "y",
-		  revert: true,
-		  scroll: false,
-		  placeholder: "sortable-placeholder",
-		  cursor: "move"
-
-		});
-    */
     //send data to MoveListServlet to move items to another lists
     function mv(list2, itemType, index){
+    	console.log("moving");
     	var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function(){
 			if(this.readyState == 4 && this.status == 200){
-
-	            location.reload();
+				var a = new XMLHttpRequest();
+	  			a.onreadystatechange = function(){
+	  				if(this.readyState == 4 && this.status == 200){
+	  						location.href = "Favorite.jsp";
+	  				}
+	  			}
+	  			a.open("POST", "ToList?list=favorite", false);
+	      		a.send();
 			}
 		}
 		xhttp.open("POST", "MoveListServlet?list1=favorite&list2=" + list2 + "&itemType=" + itemType + "&index=" + index, true);
@@ -116,10 +135,18 @@
     
     //send data to RemoveListServlet to remove items
 	function rm(itemType, index){
+    	console.log("removing");
     	var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function(){
 			if(this.readyState == 4 && this.status == 200){
-	            location.reload();
+				var a = new XMLHttpRequest();
+	  			a.onreadystatechange = function(){
+	  				if(this.readyState == 4 && this.status == 200){
+	  						location.href = "Favorite.jsp";
+	  				}
+	  			}
+	  			a.open("POST", "ToList?list=favorite", false);
+	      		a.send();
 			}
 		}
 		xhttp.open("POST", "RemoveListServlet?list=favorite&itemType=" + itemType + "&index=" + index, true);
@@ -152,189 +179,58 @@
 	    //create the restaurant boxes in the html
 	    for(i = 0;i < restaurant.length; i++){
 	    	var res = restaurant[i];
-	    	if(num % 2 == 0){
-	    		alt = "alt";
-	    	}
-	    	else{
-	    		alt = "";
-	    	}
-	    	li.innerHTML += 
-	    	    "<div class=\"row food\"><div class=\"col-8\"><!-- --><div class=\"" + alt + "\">"
-	    	    +
-	    	    createRestaurant(res.name, res.rating, res.travelTime, res.price, res.uniqueID, num, res.address)
-	    	    + "</div><!-- --></div><div class=\"col-4 mt-20\"><div><button class=\"btn btn-primary wth\" onclick=\"rm(\'restaurant\',\'"+ i +"\')\">Remove</button>"
-    	    + "</div><div class=\"mt-10\"><div class=\"dropdown\"><button class=\"btn btn-primary wth dropdown-toggle\" data-toggle=\"dropdown\">"
-			+ "Move To...</button><div class=\"dropdown-menu\"><button class=\"dropdown-item\" onclick=\"mv(\'explore\',\'restaurant\',\'"+ i +"\');\">To Explore</button>"
-			+ "<button class=\"dropdown-item\" onclick=\"mv(\'not\',\'restaurant\',\'"+ i +"\');\"> Do Not Show </button></div></div></div></div></div>";
-				num += 1;
+	    	li.innerHTML += "<div class=\"row justify-content-center\"><div class=\"col-8\">" 
+	    	+ "<div class=\"res1 card border-primary mb-3 z-depth-5\">"
+	    	+ "<div class=\"card-header\"><a style=\"float: left\" href=\"Restaurant.jsp?id=" + res.uniqueID + "\">"
+	    	+ "<h3>" + res.name + "</h3></a><div style=\"float: left; margin-left: 50px;margin-top: 5px; font-size: 21px;\"><strong>"
+	    	+ res.rating + "<i class=\"fa fa-star\" aria-hidden=\"true\" style=\"color: mediumvioletred;\"></i>"
+	    	+ "</strong></div></div><div class=\"card-body text-info\"><div class=\"container-fluid\">"
+	    	+ "<div class=\"row\"><div class=\"col-10\"><h5 class=\"card-title\">Distance: "+ res.travelTime + "</h5>"
+	    	+ "<p class=\"card-text\">" + res.address + "</p></div>"
+	    	+ "<div class=\"col-2\"><h3>" + res.price + "</h3></div></div></div></div>"
+	    	+ "<div class=\"card-footer text-muted\"><div class=\"container-fluid\">"
+	    	+ "<div class=\"row text-center\"><button class=\"btn btn-danger col-3\" onclick=\"rm(\'restaurant\',"+ i + ");\">Remove"
+	    	+ "</button><button class=\"btn btn-Secondary col-3 nav-item dropdown\"><div class=\"nav-link dropdown-toggle\" id=\"DropdownMenu\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"
+	    	+ "Move To</div><div class=\"dropdown-menu active\" aria-labelledby=\"DropdownMenu\">"
+	    	+ "<a class=\"dropdown-item\" id=\"explore\"  onclick=\"mv(\'explore\',\'restaurant\',\'"+ i +"\');\">To Explore List</a>"
+	    	+ "<a class=\"dropdown-item\" id=\"not\"  onclick=\"mv(\'not\',\'restaurant\',\'"+ i +"\');\">Do Not Show List</a>"
+	    	+ "</div></button><button class=\"btn btn-info col-3\">Up</button>"
+	    	+ "<button class=\"btn btn-info col-3\">Down</button>"
+	    	+ "</div></div></div></div></div></div>";
+			
+			num += 1;
 	    }
 	    
 	    //create the recipe boxes in the html
 	    for(i = 0;i < recipe.length; i++){
 	    	var rec = recipe[i];
-	    	if(num % 2 == 0){
-	    		alt = "alt";
+	    	if(rec.price == null){
+	    		rec.price = "$";
 	    	}
-	    	else{
-	    		alt = "";
-	    	}
-	    	li.innerHTML += "<div class=\"row food\"><div class=\"col-12 col-sm-8\"><!-- --><div class=\"" + alt + "\">"
-    	    + createRecipe(rec.recipeName, rec.rating, rec.prepTime, rec.cookTime, rec.price, num, rec.uniqueID)
-    	    + "</div><!-- --></div><div class=\"col-12 col-sm-4 mt-20\"><div><button class=\"btn btn-primary wth\" onclick=\"rm(\'recipe\',\'"+ i +"\')\">Remove</button>"
-    	    + "</div><div class=\"mt-10\"><div class=\"dropdown\"><button class=\"btn btn-primary wth dropdown-toggle\" data-toggle=\"dropdown\">"
-			+ "Move To...</button><div class=\"dropdown-menu\"><button class=\"dropdown-item\" onclick=\"mv(\'explore\',\'recipe\',\'"+ i +"\');\">To Explore</button>"
-			+ "<button class=\"dropdown-item\" onclick=\"mv(\'not\',\'recipe\',\'"+ i +"\');\"> Do Not Show</button></div></div></div></div></div>";
+	    	li.innerHTML += "<div class=\"row justify-content-center\"><div class=\"col-8\"><div class=\"res1 card border-danger mb-3 z-depth-5\">"
+	    		+ "<div class=\"card-header\"><a style=\"float: left\" href=\"Recipe.jsp?id=" + rec.uniqueID + "\">"
+	    		+ "<h3>"+rec.recipeName+"</h3></a><div style=\"float: left; margin-left: 50px;margin-top: 5px; font-size: 21px;\"><strong>"
+	    		+ rec.rating + " <i class=\"fa fa-star\" aria-hidden=\"true\" style=\"color: mediumvioletred;\"></i>"
+	    		+ "</strong></div></div><div class=\"card-body text-info\" style=\"font-size: 20px;\"><div class=\"container-fluid\">"
+	    		+ "<div class=\"row\"><div class=\"col-10\"><div class=\"container-fluid\"><div class=\"row\">"
+	    		+ "<div class=\"col-12 col-sm-6\"><div>Prep Time: "+rec.prepTime + "</div></div><div class=\"col-12 col-sm-6\">"
+	    		+ "<div>Cook Time: "+rec.cookTime +"</div></div></div></div></div>"
+	    		+ "<div class=\"col-2\"><h3>"+ rec.price + "</h3></div></div></div></div>"
+	    		+ "<div class=\"card-footer text-muted\"><div class=\"container-fluid\">"
+	    		+ "<div class=\"row text-center\">"
+	    		+ "<button class=\"btn btn-danger col-3\" onclick=\"rm(\'recipe\',\'"+ i +"\')\">"
+	    		+ "Remove</button><button class=\"btn btn-Secondary col-3 nav-item dropdown\">"
+	    		+ "<div class=\"nav-link dropdown-toggle\" href=\"#\" id=\"DropdownMenu\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">"
+	    		+ "Move To</div><div class=\"dropdown-menu active\" aria-labelledby=\"DropdownMenu\">"
+	    		+ "<a class=\"dropdown-item\" id=\"explore\" onclick=\"mv(\'explore\',\'recipe\',\'"+ i +"\');\">To Explore List</a>"
+	    		+ "<a class=\"dropdown-item\" id=\"not\"  onclick=\"mv(\'not\',\'recipe\',\'"+ i +"\');\">Do Not Show List</a>"
+	    		+ "</div></button><button class=\"btn btn-info col-3\">"
+	    		+ "Up</button><button class=\"btn btn-info col-3\">"
+	    		+ "Down</button></div></div></div></div></div></div>";
 			num += 1;
 	    }
 	    
-	    
-    
-	    //for every recipe items on the favorite list, create it
-		/* function createRecipe(name, star, prep, cook, price, num, uniqueID){
-            
-            var div1 = document.createElement('div');
-            
-            
-            var div2 = document.createElement('div');
-            div2.classList.add("container");
-            
-            var div3 = document.createElement('div');
-            div3.classList.add("row");
-            
-            var div4 = document.createElement('div');
-            div4.classList.add("col-11");
-            
-            var div5 = document.createElement('div');
-            var h1 = document.createElement('h3');
-            h1.innerHTML = name;
-            
-            var link = document.createElement('a');
-            link.href = "Recipe.jsp?id=" + uniqueID;
-            link.appendChild(h1);
-            
-            div5.appendChild(link);
-            
-            var newDiv = document.createElement('div');
-            var h2 = document.createElement('h4');
-            if(star == 0){
-            	h2.innerHTML = "no rating";
-            }
-            else{
-            	h2.innerHTML = star + "&#9734";
-            }
-            newDiv.appendChild(h2);
-            
-            
-            var div6 = document.createElement('div');
-            var h3 =  document.createElement('h4');
-            h3.innerHTML = "Prep Time: " + prep;
-            h3.style.cssText = "float: left; margin-right: 20px;";
-            var h4 =  document.createElement('h4');
-            h4.innerHTML = "Cook Time: " + cook;
-            var clear = document.createElement('div');
-            clear.cssText = "clear: both";
-            div6.appendChild(h3);
-            div6.appendChild(h4);
-            div6.appendChild(clear);
-          
-            
-            div4.appendChild(div5);
-            div4.appendChild(newDiv);
-            div4.appendChild(div6);
-            
-            var div7 = document.createElement('div');
-            div7.className = " col-1 mt50";
-            var dollar = document.createElement('h3');
-            if(price == null){
-            	dollar.innerHTML = "$";
-            }
-            else{
-            	dollar.innerHTML = price;
-            }
-            div7.appendChild(dollar);
-            
-            div3.appendChild(div4);
-            div3.appendChild(div7);
-            
-            div2.appendChild(div3);
-            div1.appendChild(div2);
-            return div1.innerHTML;
-            
-        }
-        
-	    //for restaurnat items on the favorite list, create it
-        function createRestaurant(name, star, dist, price, id, num, address){
-        	
-        	var div1 = document.createElement('div');
-            if(num % 2 == 0){
-            	div1.className = "alt ";
-            }
-            else{
-            	div1.className = "";
-            }
-            
-            var div2 = document.createElement('div');
-            div2.classList.add("container");
-            
-            var div3 = document.createElement('div');
-            div3.classList.add("row");
-            
-            var div4 = document.createElement('div');
-            div4.classList.add("col-10");
-            
-            var div5 = document.createElement('div');
-            var h1 = document.createElement('h3');
-            h1.innerHTML = name;
-            
-            var link = document.createElement('a');
-            link.href = "Restaurant.jsp?id=" + id;
-            link.appendChild(h1);
-            
-            div5.appendChild(link);
-          
-            
-            var newDiv = document.createElement('div');
-            var h2 = document.createElement('h4');
-            if(star == 0){
-            	h2.innerHTML = "no rating";
-            }
-            else{
-            	h2.innerHTML = star + "&#9734";
-            }
-            newDiv.appendChild(h2);
-            
-           
-            var div6 = document.createElement('div');
-            var h3 =  document.createElement('h4');
-            h3.innerHTML = "Distance: " + dist + "<br>Address: " + address;
-            div6.appendChild(h3);
-          
-            
-            div4.appendChild(div5);
-            div4.appendChild(newDiv);
-            div4.appendChild(div6);
-            
-            var div7 = document.createElement('div');
-            div7.className = " col-2 mt50";
-            var dollar = document.createElement('h3');
-            if(price == null){
-            	dollar.innerHTML = "$";
-            }
-            else{
-            	dollar.innerHTML = price;
-            }
-            div7.appendChild(dollar);
-            
-            div3.appendChild(div4);
-            div3.appendChild(div7);
-            
-            div2.appendChild(div3);
-            div1.appendChild(div2);
-     		return div1.innerHTML;
-        	
-        }
-     */
-    
+
     </script>
 
 </body>

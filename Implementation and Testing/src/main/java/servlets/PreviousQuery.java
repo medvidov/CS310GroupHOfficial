@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -12,9 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.gson.Gson;
 
+import objects.JsonReader;
 import objects.Recipe;
 import objects.Restaurant;
 import objects.Results;
@@ -35,19 +42,16 @@ public class PreviousQuery extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	
+	//this creates a new user
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String filename = request.getParameter("filename");
-		String token[] = filename.split("-");
-		String query = token[0];
-		Double rad = Double.parseDouble(token[2]);
-		int options = Integer.parseInt(token[1]);
-		
-		System.out.println(filename);
-		
 		ObjectMapper mapper = new ObjectMapper();
-		File file = new File(filename + ".json");
-		Results myres = mapper.readValue(file, Results.class);
+		
+		//using firebase
+		JSONObject a = JsonReader.readJsonFromUrl("https://imhungry-64e63.firebaseio.com/data/" + filename + ".json");
+
+		//File file = new File(filename + ".json");
+		Results myres = mapper.readValue(a.toString(), Results.class);
 		
 		
 		User thisUser = new User();
@@ -55,6 +59,8 @@ public class PreviousQuery extends HttpServlet {
 		ArrayList<Restaurant> restaurantResults = myres.restList;
 		ArrayList<Recipe> recipeResults = myres.recList;
 		ArrayList<String> imageResults = myres.imageList;
+		double rad = myres.rad;
+		int opt = myres.options;
 		
 		HttpSession session = request.getSession();
 		
@@ -64,7 +70,7 @@ public class PreviousQuery extends HttpServlet {
 		session.setAttribute("recList", recipeResults);
 		session.setAttribute("imgList", imageResults);
 		session.setAttribute("userObj", thisUser);
-	     
+		
 		//use JSON for javascript readability
 	    String restJson = gson.toJson(restaurantResults);
 	    String recipeJson = gson.toJson(recipeResults);
@@ -74,16 +80,16 @@ public class PreviousQuery extends HttpServlet {
 		
 		session.setAttribute("restaurantResults", restJson);
 		session.setAttribute("recipeResults", recipeJson);
-		session.setAttribute("query", query);
+		session.setAttribute("query", filename);
 		session.setAttribute("imageURLs", imageJSON);
 		session.setAttribute("user", userJSON);
-		session.setAttribute("options", options);
+		session.setAttribute("options", opt);
 		session.setAttribute("radius", rad);
 		session.setAttribute("gList", gList);
 
 		
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("Results.jsp?query=" + query);
+		RequestDispatcher dispatch = request.getRequestDispatcher("Results.jsp?query=" + filename);
 		if(dispatch != null) {
 			dispatch.forward(request,  response);
 		}

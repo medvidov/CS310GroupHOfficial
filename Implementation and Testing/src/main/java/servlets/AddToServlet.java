@@ -64,6 +64,7 @@ public class AddToServlet extends HttpServlet {
 					rs = resList.get(i);
 				}
 			}
+			//System.out.println("adding to favorite");
 			thisUser.addRestaurant(rs, list);
 			
 			if(list.equals("favorite")) {

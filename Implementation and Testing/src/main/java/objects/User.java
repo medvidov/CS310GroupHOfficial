@@ -9,7 +9,7 @@ public class User {
 	public ArrayList<Recipe> exploreRecipe = new ArrayList<Recipe>();
 	public ArrayList<Restaurant> notRestaurant = new ArrayList<Restaurant>();
 	public ArrayList<Recipe> notRecipe = new ArrayList<Recipe>();
-	public GroceryList gList = new GroceryList();
+	public ArrayList<Grocery> gList = new ArrayList<Grocery>();
 	
 	
 	public User() {
@@ -50,9 +50,21 @@ public class User {
 	
 	public boolean addGrocery(Recipe i) {
 		
+		int size = gList.size();
+		boolean added = false;
+		//check previous grocery first
 		for(int j = 0; j < i.ingredients.length; j ++) {
-			gList.gList.add(i.ingredients[j]);
-			System.out.println("adding");
+			Grocery next = new Grocery(i.ingredients[j]);
+			for(int k = 0; k < size; k++) {
+				if(gList.get(k).compare(next)) {
+					added = true;
+					break;
+				}
+			}
+			if(!added) {
+				gList.add(next);
+			}
+			added = false;
 		}
 		
 		return true;

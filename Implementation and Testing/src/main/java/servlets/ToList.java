@@ -67,6 +67,12 @@ public class ToList extends HttpServlet {
 				dispatch.forward(request,  response);
 			}
 		}
+		else if(list.equals("grocery")){
+			RequestDispatcher dispatch = request.getRequestDispatcher("Grocery.jsp");
+			if (!(dispatch == null)) {
+				dispatch.forward(request,  response);
+			}
+		}
 		else {
 			//set the do not show lists as session variable and send to the front end
 			String notRes = gson.toJson(myuser.notRestaurant);
