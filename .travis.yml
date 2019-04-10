@@ -5,10 +5,12 @@ jdk:
 
 script: ant build
 
-addons:
-  apt:
+
+    # Use JDK 8u45. The above line just causes the use of a minor version of Java 8.
+    addons:
+    apt:
     packages:
-      - openjdk-6-jdk
+    - oracle-java8-installer
 
 # safelist
 branches:
