@@ -1,1 +1,25 @@
+When are we meeting next?
+Sunday, April 14th, 2019
 
+What did you accomplish before this meeting?
+Bram: Look through Firebase Java documentation and setup the project using firebase
+Pavle: Tried to diagnose what was wrong with Travis CI
+Adelayde: Not present
+Alec: Met with Addy to go over what remaining tests we must complete before the demo
+Steven: Research Java Documentation, PATCH and PUT methods
+
+What did you accomplish during this meeting?
+Bram: Confirm what sprint backlog we have completed and what we want to complete next
+Pavle: I wrote some whitebox tests to increase coverage
+Adelayde: Not Present
+Alec: Step definitions for radius error and reorder
+Steven: reorder implementation completed and maintain information
+
+
+What is stopping you from accomplishing your goals?
+Alec: Nothing really
+Bram: Javascript has no SHA256 inbuilt function.
+I am unable to make certain branches in the code run
+Adelayde: Coachella
+Steven: Nothing at the moment
+Pavle: I have another group meeting today
