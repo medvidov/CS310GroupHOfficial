@@ -1,0 +1,24 @@
+When are we meeting next?
+Saturday, April 13th, 2019 at 12:00pm
+
+What did you accomplish before this meeting?
+Bram: Reading through the Java firebase documentation 
+Alec: Black box testing about halfway completed
+Addy: Black box testing features completed
+Pavle: I continued trying to get Travis CI to build the project and run tests
+Steven: I read Java documentation for Firebase
+
+What did you accomplish during this meeting?
+Bram: Reassign roles and keep track about what is going on
+Alec: Figuring out who is going to accomplish the remaining black box tests
+Addy: Determine when we will finish black box step definitions
+Pavle: Continued trying to fix Travis CI
+Steven: Figured out meeting times and redelegated work
+
+What is stopping you from achieving your goal?
+	Bram: Other class project and homework.
+Alec: Addy will be gone for the weekend so I am going to take over the leftover black box 
+Testing.
+Addy: Out of town this weekend.
+Pavle: Travis CI does not recognize that JUnit exists, and I have been unable to find a way to fix this
+Steven: Firebase Java documentation sucks
