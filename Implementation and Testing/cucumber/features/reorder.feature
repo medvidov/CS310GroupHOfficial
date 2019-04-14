@@ -3,7 +3,9 @@ Feature: Reorder list elements within the list management pages
 Background:
 	Given I am on the search page
 	And I search for "chicken"
-	And I add the first two chicken recipes to my favorites list
+	And I click the "Feed Me!" button
+	And I add "Chicken Marsala Over White Rice" to the "Favorite" page
+	And I add "San Diego Grilled Chicken" to the "Favorite" page
 
 Scenario: Move the bottom item upward
 	Given I am on the favorites list
