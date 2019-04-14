@@ -166,7 +166,7 @@
 		//remove non-printable and other non-valid JSON chars
 		s = s.replace(/[\u0000-\u0019]+/g,""); 
 		var recipe = JSON.parse(s);
-	    //var recipe = JSON.parse('<%= session.getAttribute("notRec") %>');
+	    // var recipe = JSON.parse('<%= session.getAttribute("notRec") %>');
 	    var num = 0;
 	    var i;
 	    var li = document.getElementById('listResult');
@@ -175,7 +175,7 @@
 	    //for every, restaurant create it
 	    for(i = 0;i < restaurant.length; i++){
 	    	var res = restaurant[i];
-	    	li.innerHTML += "<div class=\"row justify-content-center\"><div class=\"col-8\">" 
+	    	li.innerHTML += "<div id =\"restaurant" + i + "\" class=\"row justify-content-center\"><div class=\"col-8\">" 
 	    	+ "<div class=\"res1 card border-primary mb-3 z-depth-5\">"
 	    	+ "<div class=\"card-header\"><a style=\"float: left\" href=\"Restaurant.jsp?id=" + res.uniqueID + "\">"
 	    	+ "<h3>" + res.name + "</h3></a><div style=\"float: left; margin-left: 50px;margin-top: 5px; font-size: 21px;\"><strong>"
@@ -190,8 +190,8 @@
 	    	+ "Move To</div><div class=\"dropdown-menu active\" aria-labelledby=\"DropdownMenu\">"
 	    	+ "<a class=\"dropdown-item\" id=\"explore\"   onclick=\"mv(\'favorite\',\'restaurant\',\'"+ i +"\')\">Facorite</a>"
 	    	+ "<a class=\"dropdown-item\" id=\"not\" onclick=\"mv(\'explore\',\'restaurant\',\'"+ i +"\');\">To Explore</a>"
-	    	+ "</div></button><button class=\"btn btn-info col-3\">Up</button>"
-	    	+ "<button class=\"btn btn-info col-3\">Down</button>"
+	    	+ "</div></button><button id = \"restaurant" + i + "UpButton\" onclick =\"moveUp(\'restaurant" + i + "\')\" class=\"btn btn-info col-3\">Up</button>"
+	    	+ "<button id = \"restaurant" + i + "DownButton\" onclick =\"moveDown(\'restaurant" + i + "\')\" class=\"btn btn-info col-3\">Down</button>"
 	    	+ "</div></div></div></div></div></div>";
 
 			num += 1;
@@ -204,7 +204,7 @@
 	    	if(rec.price == null){
 	    		rec.price = "$";
 	    	}
-	    	li.innerHTML += "<div class=\"row justify-content-center\"><div class=\"col-8\"><div class=\"res1 card border-danger mb-3 z-depth-5\">"
+	    	li.innerHTML += "<div id =\"recipe" + i + "\" class=\"row justify-content-center\"><div class=\"col-8\"><div class=\"res1 card border-danger mb-3 z-depth-5\">"
 	    		+ "<div class=\"card-header\"><a style=\"float: left\" href=\"Recipe.jsp?id=" + rec.uniqueID + "\">"
 	    		+ "<h3>"+rec.recipeName+"</h3></a><div style=\"float: left; margin-left: 50px;margin-top: 5px; font-size: 21px;\"><strong>"
 	    		+ rec.rating + " <i class=\"fa fa-star\" aria-hidden=\"true\" style=\"color: mediumvioletred;\"></i>"
@@ -221,13 +221,29 @@
 	    		+ "Move To</div><div class=\"dropdown-menu active\" aria-labelledby=\"DropdownMenu\">"
 	    		+ "<a class=\"dropdown-item\" id=\"explore\" onclick=\"mv(\'favorite\',\'recipe\',\'"+ i +"\');\">Favorite</a>"
 	    		+ "<a class=\"dropdown-item\" id=\"not\"  onclick=\"mv(\'explore\',\'recipe\',\'"+ i +"\');\">To Explore</a>"
-	    		+ "</div></button><button class=\"btn btn-info col-3\">"
-	    		+ "Up</button><button class=\"btn btn-info col-3\">"
+	    		+ "</div></button><button id = \"recipe" + i + "UpButton\" onclick =\"moveUp(\'recipe" + i + "\')\" class=\"btn btn-info col-3\">"
+	    		+ "Up</button><button id = \"recipe" + i + "DownButton\" onclick =\"moveDown(\'recipe" + i + "\')\" class=\"btn btn-info col-3\">"
 	    		+ "Down</button></div></div></div></div></div></div>";
 
 			num += 1;
 			
 	    }
+	    // move card above the previous one
+	    function moveUp(id){
+	    	$curr = $("#"+id+"");
+	    	$onTop = $curr.prev();
+	    	$($curr).insertBefore($onTop);
+	    	
+	    	return false;
+	    }
+	   //move card below the next one
+	    function moveDown(id){
+	    	$curr = $("#"+id+"");
+	    	$below = $curr.next();
+	    	$($curr).insertAfter($below);
+	    	return false;
+	    }
+
 	
     </script>
 
