@@ -23,6 +23,7 @@
     <link href="./css/main.css?version=5" rel="stylesheet">
     
     <script>
+    
     //to navigate to results page
     	function toResult(){
     		window.location.href = "Results.jsp";
@@ -106,9 +107,9 @@
 							    Add To List
 							  </button>
 							  <div class="dropdown-menu" aria-labelledby="addTo">
-							    <button class="dropdown-item"  onclick="add('favorite');">Favorite List</button>
-							    <button class="dropdown-item" onclick="add('explore');">To Explore List</button>
-							    <button class="dropdown-item" onclick="add('not');">Do Not Show List</button>
+							    <button id="addFavorite" class="dropdown-item"  onclick="add('favorite');">Favorite List</button>
+							    <button id = "addExplore" class="dropdown-item" onclick="add('explore');">To Explore List</button>
+							    <button id = "addNot" class="dropdown-item" onclick="add('not');">Do Not Show List</button>
 							  </div>
 							</div>
                         </div>

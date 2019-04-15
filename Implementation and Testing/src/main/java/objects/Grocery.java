@@ -1,15 +1,21 @@
 package objects;
 
+import java.io.Serializable;
+
 /*
  * This is a class to store grocery items and compare with other grocery
  * 
  */
 
-public class Grocery {
+public class Grocery implements Serializable {
 	public boolean check;
 	public String amount;
 	public String itemName;
 	public String str;
+	
+	public Grocery() {
+		
+	}
 	
 	public Grocery(String s){
 		check = false;

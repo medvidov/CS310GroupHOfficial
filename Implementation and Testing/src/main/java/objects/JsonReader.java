@@ -14,6 +14,10 @@ import org.json.JSONObject;
 //this file is to read json
 
 public class JsonReader {
+	
+	public JsonReader() {
+		
+	}
 
   private static String readAll(Reader rd) throws IOException {
     StringBuilder sb = new StringBuilder();

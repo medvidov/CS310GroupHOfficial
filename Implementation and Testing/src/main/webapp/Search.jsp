@@ -20,7 +20,7 @@
     <!-- style  -->
     <link href="./css/main.css?version=5" rel="stylesheet">
     
-     <!-- Firebase App is always required and must be first -->
+    <!-- Firebase App is always required and must be first -->
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-app.js"></script>
 
     <!-- Add additional services that you want to use -->
@@ -63,18 +63,22 @@
         
 
     </style>
+    
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 
-
-
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 </head>
 
-<body >
+<body>
 
 	
    <div class="bg"></div>
-	<div class = "container" id = "buttonDiv">
-		<button onclick = "toLog()" type="button" class="btn btn-secondary">Log In</button>
-		<button onclick = "toSign()" type="button" class="btn btn-secondary">Sign Up</button>
+	<div class="container-fluid" style="z-index: 10;position: absolute;">
+		<div class="row" id="login">
+				
+		</div>
 	</div>
     <div class="container-fluid text-center content">
         <!--  title -->
@@ -107,12 +111,59 @@
                 </div>
             </form>
         </div>
+      
         <div class="text-center" style="margin-top: 150px;" id="test">
         	
         	
         </div>
     </div>
     <script type="application/javascript">
+    
+    	//check if user is set
+    	var s = ('<%= session.getAttribute("user") %>').replace(/\\n/g, "\\n")  
+        .replace(/\\'/g, "\\'")
+        .replace(/\\"/g, '\\"')
+        .replace(/\\&/g, "\\&")
+        .replace(/\\r/g, "\\r")
+        .replace(/\\t/g, "\\t")
+        .replace(/\\b/g, "\\b")
+        .replace(/\\f/g, "\\f");
+		//remove non-printable and other non-valid JSON chars
+		s = s.replace(/[\u0000-\u0019]+/g,""); 
+		var user = JSON.parse(s);
+    	if(user != null){
+    		console.log(user)
+    		//console.log(user.username);
+    		if(user.username != ""){
+    			document.getElementById("login").innerHTML = "<div class=\"col-1\">"
+    				+ "<div style=\"font-weight: bold;font-size: 25px;\">Hi " + user.username + "!</div>"
+    			    + "</div><div class=\"col-1\"><button class=\"btn btn-secondary\" onclick=\"logout();\">Log out</button>"
+    			    + "</div>;";
+    		}
+    		else{
+    			document.getElementById("login").innerHTML = "<div class=\"col-1\">"
+    				+ "<button class=\"btn btn-secondary\" onclick=\"location.href='Login.jsp';\">Login</button>"
+    			    + "</div><div class=\"col-1\"><button class=\"btn btn-secondary\" onclick=\"location.href='Sign.jsp';\">Sign Up</button>"
+    			    + "</div>;";
+    		}
+    	}
+    	else{
+    		document.getElementById("login").innerHTML = "<div class=\"col-1\">"
+			+ "<button class=\"btn btn-secondary\" onclick=\"location.href='Login.jsp';\">Login</button>"
+		    + "</div><div class=\"col-1\"><button class=\"btn btn-secondary\" onclick=\"location.href='Sign.jsp';\">Sign Up</button>"
+		    + "</div>;";
+    	}
+    	
+    	function logout(){
+    		var xhttp = new XMLHttpRequest();
+  			xhttp.onreadystatechange = function(){
+  				if(this.readyState == 4 && this.status == 200){
+  					location.href = "Search.jsp";
+  				}
+  			}
+  			xhttp.open("POST", "Logout?uid=" + user.uid, true);
+      		xhttp.send();
+    	}
     
         //change the grumpy emoji to smiley emoji when clicked
         function larger() {
@@ -151,10 +202,11 @@
                 document.getElementById("error").innerHTML = "*Please enter a valid query";
                 return false;
             }
-
+	
             return true;
         }
         
+
         function prevQuery(filename){
     		var xhttp = new XMLHttpRequest();
   			xhttp.onreadystatechange = function(){
@@ -186,6 +238,7 @@
     //get a reference to the database
     var db = firebase.database();
     
+    //for testing purposes
     function allQueries(data){
     	var doc = document.getElementById('test');
     	for(var i = 0; i < data.length; i++){

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,12 +17,12 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.gson.Gson;
 
+import objects.Database;
 import objects.JsonReader;
 import objects.Recipe;
 import objects.Restaurant;
@@ -49,13 +50,11 @@ public class PreviousQuery extends HttpServlet {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		//using firebase
-		JSONObject a = JsonReader.readJsonFromUrl("https://imhungry-64e63.firebaseio.com/data/" + filename + ".json");
+		JSONObject a = JsonReader.readJsonFromUrl("https://imhungry-64e63.firebaseio.com/newQueries/" + filename + ".json");
+		
 
 		//File file = new File(filename + ".json");
 		Results myres = mapper.readValue(a.toString(), Results.class);
-		
-		
-		User thisUser = new User();
 		
 		ArrayList<Restaurant> restaurantResults = myres.restList;
 		ArrayList<Recipe> recipeResults = myres.recList;
@@ -63,10 +62,56 @@ public class PreviousQuery extends HttpServlet {
 		double rad = myres.rad;
 		int opt = myres.options;
 		
-		HttpSession session = request.getSession();
+	
+		User thisUser;
 		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("userObj") == null) {
+//			System.out.println("previous query:new user");
+			thisUser = new User();
+//
+		} else {
+			thisUser = (User)session.getAttribute("userObj");
+			System.out.println("previous query:same user");
+		}
+		
+		Database db = new Database();
+		db.finish = false;
+		db.getPrevQuery();
+		
+		while(!db.finish) {
+			//System.out.println("a");
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if(db.finish) {
+				System.out.println("b");
+				break;
+			}
+		}
+		
+		//get previous query
+		ArrayList<String> previousQueries = new ArrayList<String>();
+		ArrayList<String> previousImg = new ArrayList<String>();
+		for(int i = 0; i < db.prev.size(); i++) {
+			//System.out.println(db.prev.get(i));
+			String token[] = db.prev.get(i).split(" ");
+			previousQueries.add(token[0]);
+			previousImg.add(token[1]);
+		}
+		
+		//setting session variable
 		Gson gson = new Gson();
 		
+	     
+		//use JSON for javascript readability
+	    String prevQ = gson.toJson(previousQueries);
+	    String prevI = gson.toJson(previousImg);
+	    
+		session.setAttribute("previousQ", prevQ);
+		session.setAttribute("previousI", prevI);
 		session.setAttribute("resList", restaurantResults);
 		session.setAttribute("recList", recipeResults);
 		session.setAttribute("imgList", imageResults);

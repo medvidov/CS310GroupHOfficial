@@ -33,6 +33,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-database.js"></script>
 
     <script>
+    
     	var url;
     	var user;
     	
@@ -111,6 +112,9 @@
                 </li>
             </ul>
         </div>
+        <div style="float:left;font-weight: bold;font-size: 25px;color: white;width: 200px;" id="login">
+        </div>
+        <button class="btn btn-secondary" style="visibility: hidden;" onclick="logout();" id="logout">Logout</button>
     </nav>
 
 <!-- collage  -->
@@ -202,6 +206,39 @@
         
     <script src="Functions.js"></script>
     <script>
+    
+  //check if user is set
+	var s = ('<%= session.getAttribute("user") %>').replace(/\\n/g, "\\n")  
+        .replace(/\\'/g, "\\'")
+        .replace(/\\"/g, '\\"')
+        .replace(/\\&/g, "\\&")
+        .replace(/\\r/g, "\\r")
+        .replace(/\\t/g, "\\t")
+        .replace(/\\b/g, "\\b")
+        .replace(/\\f/g, "\\f");
+		//remove non-printable and other non-valid JSON chars
+		s = s.replace(/[\u0000-\u0019]+/g,""); 
+		var user = JSON.parse(s);
+	if(user != null){
+		//console.log(user)
+		//console.log(user.username);
+		if(user.username != ""){
+			document.getElementById("login").innerHTML = "Hi " + user.username + "!";
+			document.getElementById("logout").style.visibility = "visible";
+		}
+	}
+	
+	
+	function logout(){
+		var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200){
+					location.href = "Search.jsp";
+				}
+			}
+			xhttp.open("POST", "Logout?uid=" + user.uid, true);
+  		xhttp.send();
+	}
     	
     	//sizes of pages 
     	var resSize = 0;
@@ -219,7 +256,6 @@
     		//get session information about restaurant and recipe lists
             var restaurant = JSON.parse('<%= session.getAttribute("restaurantResults") %>');
     		console.log(restaurant);
-            //console.log('<%= session.getAttribute("recipeResults") %>');
             var s = ('<%= session.getAttribute("recipeResults") %>').replace(/\\n/g, "\\n")  
 	            .replace(/\\'/g, "\\'")
 	            .replace(/\\"/g, '\\"')
@@ -232,7 +268,6 @@
 			s = s.replace(/[\u0000-\u0019]+/g,""); 
 			var recipe = JSON.parse(s);
 			console.log(recipe);
-            //var recipe = JSON.parse('<%= session.getAttribute("recipeResults") %>');
             
             var query = '<%= session.getAttribute("query") %>';
           
@@ -275,9 +310,21 @@
                      + "</nav></div></div>";
             }
     	
-            //set sizes
-
-            //getQuery();
+            
+            //create previous query
+            var queries = JSON.parse('<%= session.getAttribute("previousQ") %>');
+            var images = JSON.parse('<%= session.getAttribute("previousI") %>');
+            var prev = document.getElementById("prevQuery");
+            
+            if(queries != null){
+	            for(var i = 0; i < queries.length; i++){
+		            prev.innerHTML +=  "<a href=\"#home\" onclick=\"prevQuery(\'" + queries[i] +"\');\"><div class=\"card z-depth-5\" style=\"height: 300px;\">"
+		            + "<img class=\"card-img-top\" src=\"" + images[i] + "\" alt=\"Card image\" style=\"width: 300px;height: 200px;\">"
+		            + "<div class=\"card-body\"><h4 class=\"card-title\" style=\"color: black;\">" + queries[i] + "</h4>"
+		            + "</div></div></a>";
+	            }
+            }
+            
     	}
     //create all the html elements for images, restaurants and recipes
 		create();
@@ -342,43 +389,6 @@
     	
     	//console.log(document.documentElement.innerHTML);
     </script>
-    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyBCz9u8fUjOWyCTARyuNI4iE85gMUPIYHw",
-            authDomain: "imhungry-64e63.firebaseapp.com",
-            databaseURL: "https://imhungry-64e63.firebaseio.com",
-            projectId: "imhungry-64e63",
-            storageBucket: "imhungry-64e63.appspot.com",
-            messagingSenderId: "577193628400"
-        };
-        firebase.initializeApp(config);
-
-        //get a reference to the database and read value
-        var db = firebase.database();
-        var prev = document.getElementById("prevQuery");
-        
-        
-        function firebaseQuery(data) {
-        	//get an array of previous query
-            var queries = data;
-        	if(queries == null){
-        		return;
-        	}
-        	for(let i = 0; i < queries.length; i++){
-        		db.ref('data/' + queries[i] + '/imageList').once('value').then(function(snapshot) {
-                    var res = snapshot.val();
-                    prev.innerHTML +=  "<a href=\"#home\" onclick=\"prevQuery(\'" + data[i] +"\');\"><div class=\"card z-depth-5\" style=\"height: 300px;\">"
-                    + "<img class=\"card-img-top\" src=\"" + res[0] + "\" alt=\"Card image\" style=\"width: 300px;height: 200px;\">"
-                    + "<div class=\"card-body\"><h4 class=\"card-title\" style=\"color: black;\">" + data[i] + "</h4>"
-                    + "</div></div></a>";
-                });
-        	} 
-        }
-
-    </script>
-    <script src="https://imhungry-64e63.firebaseio.com/queries.json?callback=firebaseQuery"></script>
 
 </body>
 

@@ -10,8 +10,8 @@ public class Recipe extends Item implements Serializable {
 	public String imageLink;
 	public String prepTime;
 	public String cookTime;
-	public String ingredients[];
-	public String instructions[];
+	public ArrayList<String> ingredients;
+	public ArrayList<String> instructions;
 	
 	//create recipe object and initialize member variables 
 	public Recipe(String recipename, String imagelink, String preptime, String cooktime,ArrayList<String> ingredient,ArrayList<String> instruction, String q, double ratingIn) {
@@ -21,14 +21,16 @@ public class Recipe extends Item implements Serializable {
 		cookTime = cooktime;
 		query = q;
 		rating = ratingIn;
-		ingredients = new String[ingredient.size()];
-		instructions = new String[instruction.size()];
-		for(int i = 0; i < ingredient.size(); i++) {
-			ingredients[i] = ingredient.get(i);
-		}
-		for(int i = 0; i < instruction.size(); i++) {
-			instructions[i] = instruction.get(i);
-		}
+//		ingredients = new String[ingredient.size()];
+//		instructions = new String[instruction.size()];
+//		for(int i = 0; i < ingredient.size(); i++) {
+//			ingredients[i] = ingredient.get(i);
+//		}
+//		for(int i = 0; i < instruction.size(); i++) {
+//			instructions[i] = instruction.get(i);
+//		}
+		ingredients = ingredient;
+		instructions = instruction;
 		uniqueID = DigestUtils.sha256Hex(recipename);
 	}
 	

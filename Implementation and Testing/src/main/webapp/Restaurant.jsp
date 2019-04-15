@@ -136,6 +136,7 @@
     
     <script>
     
+    
     //get the current id of the restaurant item
     var link = window.location.href;
 	var url = new URL(link);

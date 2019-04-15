@@ -1,8 +1,11 @@
 package objects;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User {
+public class User implements Serializable {
 	//users lists management
+	public String username = "";
+	public String uid = "";
 	public ArrayList<Restaurant> favoriteRestaurant = new ArrayList<Restaurant>();
 	public ArrayList<Recipe> favoriteRecipe = new ArrayList<Recipe>();
 	public ArrayList<Restaurant> exploreRestaurant = new ArrayList<Restaurant>();
@@ -53,8 +56,8 @@ public class User {
 		int size = gList.size();
 		boolean added = false;
 		//check previous grocery first
-		for(int j = 0; j < i.ingredients.length; j ++) {
-			Grocery next = new Grocery(i.ingredients[j]);
+		for(int j = 0; j < i.ingredients.size(); j ++) {
+			Grocery next = new Grocery(i.ingredients.get(j));
 			for(int k = 0; k < size; k++) {
 				if(gList.get(k).compare(next)) {
 					added = true;

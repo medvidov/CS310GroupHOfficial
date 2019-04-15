@@ -85,7 +85,7 @@
         <div class="row" style="padding-top: 50px;">
         <!-- content -->
                 <div class="container-fluid" >
-                	<div class="row" id="listResult">
+                	<div class="row text-center" id="listResult">
                 		
                 	<!-- this is where the items will be shown -->
 						
@@ -108,24 +108,18 @@
 	//remove non-printable and other non-valid JSON chars
 	s = s.replace(/[\u0000-\u0019]+/g,""); 
 	var gList = JSON.parse(s);
-	//var gList = groList.gList;
 	console.log(gList);
 	var head = document.getElementById("listResult");
-	//var ol = document.createElement('ol');
+	
 	head.style.fontSize = "25px";
 	for(var i = 0; i < gList.length; i++){
 		if(!gList[i].check){
-			head.innerHTML += "<input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\"><span id=\"inner" + i + "\">" + gList[i].str + "</span><br>";
+			head.innerHTML += "<div class=\"col-12\"><input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\"><span id=\"inner" + i + "\">" + gList[i].str + "</span></div>";
 		}
 		else{
-			head.innerHTML += "<input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\" checked><span id=\"inner" + i + "\"><strike><i>" + gList[i].str + "</strike></i></span><br>";
-		}
-		//var li = document.createElement('li');
-		//li.innerHTML = gList[i].str;
-		//ol.appendChild(li);
-		
+			head.innerHTML += "<div class=\"col-12\"><input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\" checked><span id=\"inner" + i + "\"><strike><i>" + gList[i].str + "</strike></i></span></div>";
+		}	
 	}
-	//head.appendChild(ol);
 	
 	//add checked values
 	function test(event){

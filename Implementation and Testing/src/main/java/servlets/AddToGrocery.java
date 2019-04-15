@@ -65,7 +65,5 @@ public class AddToGrocery extends HttpServlet {
 	    session.setAttribute("user", userJSON);
 	    session.setAttribute("gList", gList);
 
-
-		
 	}
 }
