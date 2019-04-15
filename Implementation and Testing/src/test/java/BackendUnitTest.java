@@ -2,8 +2,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -30,25 +31,108 @@ import objects.Restaurant;
 import objects.Results;
 import objects.ToJson;
 import objects.User;
-//import objects.YelpRequest;
+import objects.YelpRequest;
 import servlets.AddToGrocery;
 import servlets.AddToServlet;
-import servlets.GetQueries;
+import servlets.CheckLogin;
+import servlets.GetUser;
 import servlets.GroceryChecked;
+import servlets.Logout;
 import servlets.MoveListServlet;
 import servlets.PreviousQuery;
 import servlets.RemoveListServlet;
 import servlets.ReturnResults;
 import servlets.ToList;
+import servlets.createUser;
+import objects.Database;
 import objects.Grocery;
 import objects.ImagesRequest;
+import objects.JsonReader;
 import objects.Recipe;
-//import objects.RecipeRequest;
+import objects.RecipeRequest;
 
 
 public class BackendUnitTest {
 	
 	public int limit = 5;
+	
+	//SERVLET TESTS
+	
+		@Mock
+	    HttpServletRequest request;
+	 
+	    @Mock
+	    HttpServletResponse response;
+	    
+	    @Mock
+	    HttpSession session;
+	    
+	    User newUser;
+	    ArrayList<Restaurant> resList;
+	    ArrayList<Recipe> recList;
+	    ArrayList<String> imageList;
+	    ArrayList<Grocery> gList;
+
+	    @Before
+	    public void runBeforeTestMethod() {
+	    	MockitoAnnotations.initMocks(this);
+	     
+	        request = Mockito.mock(HttpServletRequest.class);
+	        response = Mockito.mock(HttpServletResponse.class);
+	        session = Mockito.mock(HttpSession.class);
+
+	        when(request.getSession()).thenReturn(session);
+	   
+	    	//set up session vars
+	    	newUser = new User();
+	    	resList = new ArrayList<Restaurant>();
+	    	recList = new ArrayList<Recipe>();
+	    	imageList = new ArrayList<String>();
+	    	gList = new ArrayList<Grocery>();
+	    	
+	    	gList.add(new Grocery("1 teaspoon salt"));
+	    	
+	    	newUser.gList = gList;
+	   
+	    	//populate
+	    	Restaurant testRest = new Restaurant();
+	    	testRest.name = "Test Restaurant";
+	    	testRest.uniqueID = "0";
+	    	resList.add(testRest);
+			newUser.exploreRestaurant.add(testRest);
+			
+			Restaurant favRest = new Restaurant();
+	    	favRest.name = "Fav Restaurant";
+	    	favRest.uniqueID = "1";
+	    	resList.add(favRest);
+			newUser.favoriteRestaurant.add(favRest);
+			
+			Restaurant notRest = new Restaurant();
+			notRest.name = "Not Restaurant";
+	    	notRest.uniqueID = "2";
+	    	resList.add(notRest);
+			newUser.notRestaurant.add(notRest);
+			
+			Recipe testRecipe = new Recipe("Test Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
+			testRecipe.uniqueID = "3";
+			recList.add(testRecipe);
+			newUser.favoriteRecipe.add(testRecipe);
+			
+			Recipe exploreRecipe = new Recipe("Explore Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
+			exploreRecipe.uniqueID = "4";
+			recList.add(exploreRecipe);
+			newUser.exploreRecipe.add(exploreRecipe);
+			
+			Recipe notRecipe = new Recipe("Not Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
+			exploreRecipe.uniqueID = "5";
+			recList.add(notRecipe);
+			newUser.notRecipe.add(notRecipe);
+			
+			imageList.add("asdas");
+
+			session.setAttribute("resList", resList);
+			session.setAttribute("recList", recList);
+	    }
 	
 	
 	//RECIPE TESTS
@@ -500,83 +584,7 @@ public class BackendUnitTest {
 		assertEquals(imageResults.size(), 10);	
 	}
 	
-	//SERVLET TESTS
 	
-	@Mock
-    HttpServletRequest request;
- 
-    @Mock
-    HttpServletResponse response;
-    
-    @Mock
-    HttpSession session;
-    
-    User newUser;
-    ArrayList<Restaurant> resList;
-    ArrayList<Recipe> recList;
-    ArrayList<String> imageList;
-    ArrayList<Grocery> gList;
-
-    @Before
-    public void runBeforeTestMethod() {
-    	MockitoAnnotations.initMocks(this);
-     
-        request = Mockito.mock(HttpServletRequest.class);
-        response = Mockito.mock(HttpServletResponse.class);
-        session = Mockito.mock(HttpSession.class);
-
-        when(request.getSession()).thenReturn(session);
-   
-    	//set up session vars
-    	newUser = new User();
-    	resList = new ArrayList<Restaurant>();
-    	recList = new ArrayList<Recipe>();
-    	imageList = new ArrayList<String>();
-    	gList = new ArrayList<Grocery>();
-    	
-    	gList.add(new Grocery("1 teaspoon salt"));
-    	
-    	newUser.gList = gList;
-   
-    	//populate
-    	Restaurant testRest = new Restaurant();
-    	testRest.name = "Test Restaurant";
-    	testRest.uniqueID = "0";
-    	resList.add(testRest);
-		newUser.exploreRestaurant.add(testRest);
-		
-		Restaurant favRest = new Restaurant();
-    	favRest.name = "Fav Restaurant";
-    	favRest.uniqueID = "1";
-    	resList.add(favRest);
-		newUser.favoriteRestaurant.add(favRest);
-		
-		Restaurant notRest = new Restaurant();
-		notRest.name = "Not Restaurant";
-    	notRest.uniqueID = "2";
-    	resList.add(notRest);
-		newUser.notRestaurant.add(notRest);
-		
-		Recipe testRecipe = new Recipe("Test Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
-		testRecipe.uniqueID = "3";
-		recList.add(testRecipe);
-		newUser.favoriteRecipe.add(testRecipe);
-		
-		Recipe exploreRecipe = new Recipe("Explore Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
-		exploreRecipe.uniqueID = "4";
-		recList.add(exploreRecipe);
-		newUser.exploreRecipe.add(exploreRecipe);
-		
-		Recipe notRecipe = new Recipe("Not Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
-		exploreRecipe.uniqueID = "5";
-		recList.add(notRecipe);
-		newUser.notRecipe.add(notRecipe);
-		
-		imageList.add("asdas");
-
-		session.setAttribute("resList", resList);
-		session.setAttribute("recList", recList);
-    }
  
     @Test
     public void testAddToServ() throws IOException, ServletException {
@@ -1026,6 +1034,8 @@ public class BackendUnitTest {
         when(request.getParameter("query")).thenReturn("hamburger");
         when(request.getParameter("options")).thenReturn("5");
         when(request.getParameter("radius")).thenReturn("10.0");
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("userObj")).thenReturn(newUser);
        
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
@@ -1044,9 +1054,13 @@ public class BackendUnitTest {
     	
     	ReturnResults servlet = new ReturnResults();
     	
+    	
         when(request.getParameter("query")).thenReturn("chinese");
         when(request.getParameter("options")).thenReturn("1");
         when(request.getParameter("radius")).thenReturn("10.0");
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("userObj")).thenReturn(newUser);
+
        
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
@@ -1194,33 +1208,7 @@ public class BackendUnitTest {
   	    	assertEquals(1,1);
   	    }
   	    
-  	    //test GetQUeries
-  	    
-  	    
-  	    //file exist
-  	   
-  	    
-  	    @Test
-  	    public void testNoPrevQueries() throws IOException, ServletException {
-  	    	
-  	    	File file = new File("queries.txt");
-  	    	file.delete();
-  	    	
-  	    	GetQueries servlet = new GetQueries();
-  	    	
-  	        StringWriter sw = new StringWriter();
-  	        PrintWriter pw = new PrintWriter(sw);
-  	         
-  	        when(response.getWriter()).thenReturn(pw);
-  	 
-  	        servlet.service(request, response);
-  	        
-  	        File newFile = new File("queries.txt");
-  	        
-  	        assertEquals(1, 1);
-  	    }
-  	    
-  	    
+
   	    //test PreviousQuery
   	    @Test
   	    public void testPreviousQuery() throws IOException, ServletException{
@@ -1228,6 +1216,8 @@ public class BackendUnitTest {
   	    	PreviousQuery servlet = new PreviousQuery();
   	   	 
   	        when(request.getParameter("filename")).thenReturn("hamburger");
+  	        when(request.getSession()).thenReturn(session);
+  	        when(session.getAttribute("userObj")).thenReturn(newUser);
   	        
   	        StringWriter sw = new StringWriter();
   	        PrintWriter pw = new PrintWriter(sw);
@@ -1285,6 +1275,30 @@ public class BackendUnitTest {
   	    }
   	    
   	    @Test
+	    public void testJsonReaderEmpty() throws IOException, ServletException {
+	    	JsonReader a = new JsonReader();
+	    	assertNotNull(a);
+	    }
+  	    
+  	  @Test
+	    public void testGroceryEmpty() throws IOException, ServletException {
+	    	Grocery a = new Grocery();
+	    	assertNotNull(a);
+	    }
+  	  
+	  	@Test
+	    public void testCombiningGrocery() throws IOException, ServletException {
+	    	User a = new User();
+	    	Recipe b = new Recipe();
+	    	b.ingredients = new ArrayList<String>();
+	    	b.ingredients.add("1 spoon salt");
+	    	a.gList.add(new Grocery("1 spoon salt"));
+	    	a.addGrocery(b);
+	    	assertEquals(1,1);
+	    }
+	    
+  	    
+  	    @Test
   	    public void testToJSONObject2() throws IOException, ServletException {
   	    	ArrayList<Restaurant> rs = new ArrayList<Restaurant>();
   	    	ArrayList<Recipe> rc = new ArrayList<Recipe>();
@@ -1336,9 +1350,13 @@ public class BackendUnitTest {
       	
   		  ReturnResults servlet = new ReturnResults();
       	
+  		 when(request.getSession()).thenReturn(session);
+     
+  		  when(session.getAttribute("userObj")).thenReturn(newUser);
           when(request.getParameter("query")).thenReturn("hamburger");
           when(request.getParameter("options")).thenReturn("5");
           when(request.getParameter("radius")).thenReturn("10.0");
+          
          
           StringWriter sw = new StringWriter();
           PrintWriter pw = new PrintWriter(sw);
@@ -1370,6 +1388,8 @@ public class BackendUnitTest {
           when(request.getParameter("query")).thenReturn("hamburger");
           when(request.getParameter("options")).thenReturn("5");
           when(request.getParameter("radius")).thenReturn("10.0");
+          when(request.getSession()).thenReturn(session);
+          when(session.getAttribute("userObj")).thenReturn(newUser);
          
           StringWriter sw = new StringWriter();
           PrintWriter pw = new PrintWriter(sw);
@@ -1382,6 +1402,8 @@ public class BackendUnitTest {
           when(request.getParameter("query")).thenReturn("hamburger");
           when(request.getParameter("options")).thenReturn("5");
           when(request.getParameter("radius")).thenReturn("20.0");
+          when(request.getSession()).thenReturn(session);
+          when(session.getAttribute("userObj")).thenReturn(newUser);
          
           when(response.getWriter()).thenReturn(pw);
           
@@ -1425,20 +1447,6 @@ public class BackendUnitTest {
   		assertEquals(list.itemName, " salt ");
   	}
   	
-  	//test user add the same grocery
-  	@Test
-  	public void addSameGlist() {
-  		Grocery list = new Grocery("1 teaspoon salt");
-  		User temp = new User();
-  		ArrayList<Grocery> a = new ArrayList<Grocery>();
-  		a.add(list);
-  		temp.gList = a;
-  		Recipe i = new Recipe();
-  		i.ingredients = new String[1];
-  		i.ingredients[0] = "1 teaspoon salt";
-  		temp.addGrocery(i);
-  		assertEquals(1, 1);
-  	}
 	  	
   	//test restaurant java
   	@Test
@@ -1447,28 +1455,6 @@ public class BackendUnitTest {
   		assertEquals(temp.toString(), null);
   	}
 	  	
-  	//test GetQueries.java
-  	@Test
-    public void withFile() throws IOException, ServletException {
-    	
-  		File please = new File("queries.txt");
-  		File yay = new File("hamburger.json");
-  		Results p = new Results(resList, recList, imageList, 10.0, 0);
-  		ObjectMapper mapper = new ObjectMapper();
-  		ArrayList<String> wow = new ArrayList<String>();
-  		wow.add("hamburger");
-  		mapper.writeValue(please, wow);
-  		mapper.writeValue(yay, p);
-  		GetQueries servlet = new GetQueries();
-    	
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        when(response.getWriter()).thenReturn(pw);
-                    
-        servlet.service(request, response);
-        assertEquals(1,1);
-       
-    }
   	
   	//testing for GroceryChecked
   	@Test
@@ -1508,5 +1494,176 @@ public class BackendUnitTest {
         assertEquals(1,1);
        
     }
+  	
+  	/*
+  	 * Relevant tests here. When you run this code, line 39 and below in GetUser.java does not run
+  	 */
+  	
+  	@Test
+  	//Test valid user login
+  	public void testValidLogin() throws IOException, ServletException{
+  		GetUser servlet = new GetUser();
+  		
+  		when(request.getParameter("username")).thenReturn("test");
+  		when(request.getParameter("password")).thenReturn("test");
+  		
+  		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	//Test invalid user login
+  	public void testLogin() throws IOException, ServletException{
+  		GetUser servlet = new GetUser();
+  		
+  		when(request.getParameter("username")).thenReturn("test");
+  		when(request.getParameter("password")).thenReturn("test");
+  		
+  		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	//Test add to servlet
+  	public void testAddingToServlet() throws IOException, ServletException{
+  		AddToServlet servlet = new AddToServlet();
+  		
+  		when(request.getParameter("id")).thenReturn("3");
+  		when(request.getParameter("item")).thenReturn("recipe");
+  		when(request.getParameter("list")).thenReturn("not");
+  		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(session.getAttribute("resList")).thenReturn(resList);
+        when(session.getAttribute("recList")).thenReturn(recList);
+  		
+  		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	//Test add to servlet
+  	public void previousQueryNull() throws IOException, ServletException{
+  		PreviousQuery servlet = new PreviousQuery();
+  		
+  		when(request.getSession()).thenReturn(session);
+  		when(request.getParameter("filename")).thenReturn("Soup");
+  		when(session.getAttribute("userObj")).thenReturn(null);
+        		
+  		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	public void returnResultsNull() throws IOException, ServletException{
+  		ReturnResults servlet = new ReturnResults();
+  		
+  		when(request.getSession()).thenReturn(session);
+  		when(request.getParameter("query")).thenReturn("Soup");
+		when(request.getParameter("options")).thenReturn("5");
+		when(request.getParameter("radius")).thenReturn("0.2");
+  		when(session.getAttribute("userObj")).thenReturn(null);
+        		
+  		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	public void toGrocery() throws IOException, ServletException{
+  		ToList servlet = new ToList();
+  		
+  		when(request.getSession()).thenReturn(session);
+  		when(request.getParameter("list")).thenReturn("grocery");
+  		when(session.getAttribute("userObj")).thenReturn(newUser);
+        		
+  		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	public void createNewUser() throws IOException, ServletException{
+  		createUser servlet = new createUser();
+  		
+  		when(request.getParameter("username")).thenReturn("test");
+  		when(request.getParameter("password")).thenReturn("test");
+        		
+  		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	public void logOut() throws IOException, ServletException{
+  		Logout servlet = new Logout();
+  		
+  		User myuser = new User();
+  		myuser.username = "check";
+  		myuser.uid = "check" + "-" + DigestUtils.sha256Hex("check");
+  		
+  		when(request.getSession()).thenReturn(session);
+  		when(session.getAttribute("userObj")).thenReturn(myuser);
+        		
+  		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	public void checkLoginSuccess() throws IOException, ServletException{
+  		CheckLogin servlet = new CheckLogin();
+  		
+  		when(request.getParameter("username")).thenReturn("test");
+  		when(request.getParameter("password")).thenReturn("test");
+        		
+  		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	public void checkLoginFail() throws IOException, ServletException{
+  		CheckLogin servlet = new CheckLogin();
+  		
+  		when(request.getParameter("username")).thenReturn("test");
+  		when(request.getParameter("password")).thenReturn("wrong");
+        		
+  		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        when(response.getWriter()).thenReturn(pw);
+                    
+        servlet.service(request, response);
+        assertEquals(1,1);
+  	}
       
 }
