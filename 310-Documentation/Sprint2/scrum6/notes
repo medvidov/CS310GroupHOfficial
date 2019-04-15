@@ -1,1 +1,21 @@
+What did you accomplish before this meeting?
+Steven: Did some documentation and reorder implementation
+Bram: set up firebase through the server side and configure the firebase database.
+Adelayde: Nothing
+Pavle: Looked into testing for databases
+Alec: Step definitions for reorder and paired programming with Steven
+
+What do you hope to accomplish during this meeting:
+Steven: Finished documentation and demo project
+Bram: Finish maintain information implementation
+Adelayde: Not Present
+Pavle: I would like to finish step definitions for blackbox tests
+Alec: Finish black box testing and documentation and prepare demo
+
+What is stopping you from accomplishing your goals?
+Steven: Nothing at the moment
+Bram: Testing is behind schedule
+Adelayde: Not applicable
+Pavle: I am currently unable to run blackbox tests (which I ended up working on)
+Alec: Step definitions keep on getting errors that I cannot fix
 
