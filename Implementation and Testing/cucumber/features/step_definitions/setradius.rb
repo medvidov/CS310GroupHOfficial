@@ -1,38 +1,53 @@
-Feature: Set radius 
+Given(/^I am on the Search page$/) do
+    visit 'http://localhost:8080/ImHungry2/Search.jsp'
+end
 
-Background:
-	Given I am on the search page
-	
-Scenario: Radius search included  
-	Then I should see a field for radius
-	And I should see a label for miles
+Then(/^I should see a field for radius$/) do
+    page.should have_field('radius')
+end
 
-Scenario Outline: Text box does not allow integers below 1
-	When I enter <radius> into the radius box
-	Then I should see no change
+Then(/^I should see a label for miles$/) do
+    page.should have_content('miles')
+end
 
-	Examples:
-		| radius |
-		| 0 |
-		| -1 |
-		| -5 |
-		| -20 |
-		| -100 |
+When(/^I enter (\d+) into the radius box$/) do |arg|
+    fill_in 'radius', with: arg
+end
 
-Scenario Outline: Search for valid radius
-	When I enter "hamburger" into the search box
-	And I enter <radius> into the radius box
-	And I click the "Feed Me!" button 
-	Then I should be on the Results Page
-	And I should see Restaurants within radius <radius>
+When(/^I enter \-(\d+) into the radius box$/) do |arg|
+    fill_in 'radius', with: arg
+end
 
-	Examples:
-		| radius |
-		| 1 |
-		| 10 |
-		
-Scenario: Radius is too small to have any restaurant results
-	When I enter "crawfish" into the search box
-	And I enter 0.1 into the radius box
-	And I click the "Feed Me!" button
-	Then an error message should appear on the results page
+Then(/^I should see no change$/) do
+    expect(page).to have_current_path(/\/Search(.*)/)
+end
+
+When(/^I enter "crawfish" into the search box$/) do
+    #fill_in 'query', with: 'crawfish'
+  find('#meditarian').click
+end
+
+When(/^I enter "hamburger" into the search box$/) do
+    fill_in 'query', with: 'hamburger'
+end
+
+And(/^I click the "Feed Me!" button$/) do
+    find('#searchBtn').click
+end
+
+Then(/^I should be on the Results Page$/)do
+    page.should have_content('Results for')
+end
+
+And(/^I should see Restaurants within radius (\d+)$/) do |arg|
+    maxDistance = 11200/1.2/60
+    #Need to get an array of the distances somehow
+end
+
+When(/^I enter 0.1 into the radius box$/) do
+    fill_in 'radius', with: 0.1
+end
+
+Then(/^an error message should appear on the results page$/) do
+    page.should have_content('No Restaurants within range!')
+end
