@@ -24,11 +24,13 @@ Given(/^I log the same user back in$/) do
 end
 
 Given(/^I go to the results page$/) do
+   visit 'http://localhost:8080/ImHungry2/Results.jsp'
   # fill_in 'query', with: 'burger'
   # find('#searchBtn').click
 end
 
 Given(/^I go to the grocery list page$/) do
+  visit 'http://localhost:8080/ImHungry2/Grocery.jsp'
   # find('#grocery').click
 end
 
