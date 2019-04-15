@@ -22,6 +22,11 @@ Then(/^I should see no change$/) do
     expect(page).to have_current_path(/\/Search(.*)/)
 end
 
+When(/^I enter "crawfish" into the search box$/) do
+    #fill_in 'query', with: 'crawfish'
+  find('#meditarian').click
+end
+
 When(/^I enter "hamburger" into the search box$/) do
     fill_in 'query', with: 'hamburger'
 end
@@ -39,8 +44,8 @@ And(/^I should see Restaurants within radius (\d+)$/) do |arg|
     #Need to get an array of the distances somehow
 end
 
-When(/^I enter ({float}) into the radius box$/) do |float|
-    fill_in 'radius', with: float
+When(/^I enter 0.1 into the radius box$/) do
+    fill_in 'radius', with: 0.1
 end
 
 Then(/^an error message should appear on the results page$/) do
