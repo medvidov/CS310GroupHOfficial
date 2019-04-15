@@ -16,6 +16,7 @@ And(/^I clicked the Feed Me! button$/) do
 end
 
 When(/^I am on the results page$/) do
+  visit 'http://localhost:8080/ImHungry2/Results.jsp'
 #page.should have_content('Results for Chicken')
 end
 
@@ -45,6 +46,8 @@ When(/^I click on "Chicken"$/) do
 end
 
 When(/^I should go to the results page$/) do
+  visit 'http://localhost:8080/ImHungry2/Results.jsp'
+  
 #page.should have_content('Results for Chicken')
 end
 
