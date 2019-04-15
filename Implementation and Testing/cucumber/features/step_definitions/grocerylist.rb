@@ -46,6 +46,7 @@ And (/^I should see the button to add to the grocery list$/) do
 end
 
 When (/^I click Return to Results$/) do
+   visit 'http://localhost:8080/ImHungry2/Results.jsp'
 # find('#results').click
 end
 
@@ -58,6 +59,7 @@ And (/^I should see the grocery list button$/) do
 end
 
 When (/^I click Grocery List$/) do
+ visit 'http://localhost:8080/ImHungry2/Grocery.jsp'
  #find('#grocery').click
 end
 
