@@ -2,8 +2,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ import objects.Restaurant;
 import objects.Results;
 import objects.ToJson;
 import objects.User;
-import objects.YelpRequest;
+//import objects.YelpRequest;
 import servlets.AddToGrocery;
 import servlets.AddToServlet;
 import servlets.GetQueries;
@@ -43,7 +43,7 @@ import servlets.ToList;
 import objects.Grocery;
 import objects.ImagesRequest;
 import objects.Recipe;
-import objects.RecipeRequest;
+//import objects.RecipeRequest;
 
 
 public class BackendUnitTest {
