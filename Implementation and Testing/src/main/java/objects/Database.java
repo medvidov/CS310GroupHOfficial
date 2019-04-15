@@ -40,8 +40,10 @@ public class Database {
 		}
 		
 		//CHANGE THIS
+		// /home/student/git/CS310GroupHOfficial/Implementation and Testing/src/main/webapp
+		// C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\webapp\\
 		FileInputStream serviceAccount =
-				  new FileInputStream("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\webapp\\imhungry-64e63-firebase-adminsdk-5u9ua-cef44f88a3.json");
+				  new FileInputStream("/home/student/git/CS310GroupHOfficial/Implementation and Testing/src/main/webapp/imhungry-64e63-firebase-adminsdk-5u9ua-cef44f88a3.json");
 
 				FirebaseOptions option = new FirebaseOptions.Builder()
 				  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
