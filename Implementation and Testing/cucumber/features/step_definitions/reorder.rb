@@ -13,7 +13,7 @@ Given(/^I am on the favorites list$/) do
 end
 
 Given(/^I click the up arrow on the second item$/) do
-   find_by_id('recipe0UpButton').click
+   find_by_id('#recipe0UpButton').click
 end
 
 Then(/^the second item will now be the first item on the list$/) do
@@ -21,7 +21,7 @@ Then(/^the second item will now be the first item on the list$/) do
 end
 
 Given(/^I click the down arrow on the first item$/) do
-   find_by_id('recipe0DownButton').click
+   find_by_id('#recipe0DownButton').click
 end
 
 Then(/^the first item will now be the second item on the list$/) do

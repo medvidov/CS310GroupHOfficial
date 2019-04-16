@@ -3,10 +3,6 @@ Feature: User interfaces must look modern and be attractive
 Background:
     Given I am on the Search page
 
-Scenario: Updated CSS on search
-    Then I should see a background image
-    And I should see styled font different from default
-
 Scenario: Updated CSS on results
     Given I search for "coffee"
     And I clicked the Feed Me! button

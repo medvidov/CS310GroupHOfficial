@@ -1,1 +1,1 @@
-["hamburger","asd","hamburger-5-10.0.json","file.txt"]
+["hamburger","chinese"]
