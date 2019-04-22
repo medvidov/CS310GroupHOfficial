@@ -1,1 +1,24 @@
+When is the next meeting?
+Wednesday, April 24, 2019
+
+What did you accomplish before this meeting?
+Steven: Outside class work
+Bram: Finishing up on other classes homework
+Alec: Cucumber test for login functionality
+Adelayde: Work on making sure cucumber step definitions are up to date 
+Pavle: Read up on Travis CI configuration
+
+What do you want to accomplish during this meeting?
+Steven: Update each other on current progress
+Bram: Keeping tabs with the progress of blackbox testing and whitebox testing 
+Alec: Start step definitions for log in
+Adelayde: Determine who will write which black box tests 
+Pavle: Not Present
+
+What is standing in your way of accomplishing your goals?
+Steven: Outside class projects
+Bram: Nothing right now 
+Alec: Confusion on which testing still needs to be done
+Adelayde: Cucumber steps
+Pavle: Travis is hard
 
