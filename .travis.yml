@@ -16,8 +16,8 @@ branches:
   only:
   - master
 
-#before_install:
-#  - cd Implementation\ and\ Testing/
+before_install:
+  - cd Implementation\ and\ Testing/
 
 install: skip
 
