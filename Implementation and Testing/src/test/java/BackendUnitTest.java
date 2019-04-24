@@ -40,7 +40,9 @@ import servlets.GroceryChecked;
 import servlets.Logout;
 import servlets.MoveListServlet;
 import servlets.PreviousQuery;
+import servlets.RemoveGrocery;
 import servlets.RemoveListServlet;
+import servlets.ReorderList;
 import servlets.ReturnResults;
 import servlets.ToList;
 import servlets.createUser;
@@ -93,6 +95,7 @@ public class BackendUnitTest {
 	    	gList.add(new Grocery("1 teaspoon salt"));
 	    	
 	    	newUser.gList = gList;
+	    	newUser.gList.add(new Grocery("1 teaspoon salt"));
 	   
 	    	//populate
 	    	Restaurant testRest = new Restaurant();
@@ -1665,5 +1668,449 @@ public class BackendUnitTest {
         servlet.service(request, response);
         assertEquals(1,1);
   	}
+  	
+  	
+  	//test database
+  	@Test
+  	public void testUserPreviousQuery() throws IOException {
+  		Database db = new Database();
+  		User myuser = new User();
+  		myuser.username = "bram";
+  		myuser.uid = "bram" + "-" + DigestUtils.sha256Hex("darkdragonZ2!");
+  		db.getUserPrevQuery(myuser);
+  		assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	public void testAddingUserQuery() throws IOException {
+  		Database db = new Database();
+  		User myuser = new User();
+  		myuser.username = "check";
+  		myuser.uid = "check" + "-" + DigestUtils.sha256Hex("check");
+  		db.addUserNewQuery(myuser, "hamburger", new Results());
+  		assertEquals(1,1);
+  	}
+  	
+  	@Test
+  	public void testRemoveGrocery() {
+  		User db = new User();
+  		db.gList.add(new Grocery("1 teaspoon salt"));
+  		db.removeGrocery(0);
+  		assertEquals(1,1);
+  	}
+  	
+  	@Test
+    public void removeGrocery() throws IOException, ServletException {
+    	
+		RemoveGrocery servlet = new RemoveGrocery();
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("0");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void previousQueryWithUser() throws IOException, ServletException {
+    	
+		PreviousQuery servlet = new PreviousQuery();
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("filename")).thenReturn("hamburger");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void returnResultsWithUser() throws IOException, ServletException {
+    	
+		ReturnResults servlet = new ReturnResults();
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("query")).thenReturn("hamburger");
+        when(request.getParameter("options")).thenReturn("5");
+        when(request.getParameter("radius")).thenReturn("10.0");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList1() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Restaurant favRest = new Restaurant();
+    	favRest.name = "Fav Restaurant";
+    	favRest.uniqueID = "1";
+		newUser.favoriteRestaurant.add(favRest);
+		newUser.favoriteRestaurant.add(favRest);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("restaurant-0");
+        when(request.getParameter("list")).thenReturn("favorite");
+        when(request.getParameter("move")).thenReturn("down");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList2() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Restaurant favRest = new Restaurant();
+    	favRest.name = "Fav Restaurant";
+    	favRest.uniqueID = "1";
+		newUser.favoriteRestaurant.add(favRest);
+		newUser.favoriteRestaurant.add(favRest);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("restaurant-1");
+        when(request.getParameter("list")).thenReturn("favorite");
+        when(request.getParameter("move")).thenReturn("up");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList3() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Restaurant favRest = new Restaurant();
+    	favRest.name = "Fav Restaurant";
+    	favRest.uniqueID = "1";
+		newUser.exploreRestaurant.add(favRest);
+		newUser.exploreRestaurant.add(favRest);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("restaurant-0");
+        when(request.getParameter("list")).thenReturn("explore");
+        when(request.getParameter("move")).thenReturn("down");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList4() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Restaurant favRest = new Restaurant();
+    	favRest.name = "Fav Restaurant";
+    	favRest.uniqueID = "1";
+		newUser.exploreRestaurant.add(favRest);
+		newUser.exploreRestaurant.add(favRest);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("restaurant-1");
+        when(request.getParameter("list")).thenReturn("explore");
+        when(request.getParameter("move")).thenReturn("up");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList5() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Restaurant favRest = new Restaurant();
+    	favRest.name = "Fav Restaurant";
+    	favRest.uniqueID = "1";
+		newUser.notRestaurant.add(favRest);
+		newUser.notRestaurant.add(favRest);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("restaurant-0");
+        when(request.getParameter("list")).thenReturn("not");
+        when(request.getParameter("move")).thenReturn("down");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList6() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Restaurant favRest = new Restaurant();
+    	favRest.name = "Fav Restaurant";
+    	favRest.uniqueID = "1";
+		newUser.notRestaurant.add(favRest);
+		newUser.notRestaurant.add(favRest);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("restaurant-1");
+        when(request.getParameter("list")).thenReturn("not");
+        when(request.getParameter("move")).thenReturn("up");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	
+  	//check recipe
+  	@Test
+    public void reorderList7() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Recipe testRecipe = new Recipe("Test Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
+		testRecipe.uniqueID = "3";
+		recList.add(testRecipe);
+		newUser.favoriteRecipe.add(testRecipe);
+		newUser.favoriteRecipe.add(testRecipe);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("recipe-0");
+        when(request.getParameter("list")).thenReturn("favorite");
+        when(request.getParameter("move")).thenReturn("down");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList8() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Recipe testRecipe = new Recipe("Test Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
+		testRecipe.uniqueID = "3";
+		recList.add(testRecipe);
+		newUser.favoriteRecipe.add(testRecipe);
+		newUser.favoriteRecipe.add(testRecipe);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("recipe-1");
+        when(request.getParameter("list")).thenReturn("favorite");
+        when(request.getParameter("move")).thenReturn("up");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList9() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Recipe testRecipe = new Recipe("Test Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
+		testRecipe.uniqueID = "3";
+		recList.add(testRecipe);
+		newUser.exploreRecipe.add(testRecipe);
+		newUser.exploreRecipe.add(testRecipe);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("recipe-0");
+        when(request.getParameter("list")).thenReturn("explore");
+        when(request.getParameter("move")).thenReturn("down");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList10() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Recipe testRecipe = new Recipe("Test Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
+		testRecipe.uniqueID = "3";
+		recList.add(testRecipe);
+		newUser.exploreRecipe.add(testRecipe);
+		newUser.exploreRecipe.add(testRecipe);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("recipe-1");
+        when(request.getParameter("list")).thenReturn("explore");
+        when(request.getParameter("move")).thenReturn("up");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList11() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Recipe testRecipe = new Recipe("Test Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
+		testRecipe.uniqueID = "3";
+		recList.add(testRecipe);
+		newUser.notRecipe.add(testRecipe);
+		newUser.notRecipe.add(testRecipe);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("recipe-0");
+        when(request.getParameter("list")).thenReturn("not");
+        when(request.getParameter("move")).thenReturn("down");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
+  	@Test
+    public void reorderList12() throws IOException, ServletException {
+    	
+		ReorderList servlet = new ReorderList();
+		
+		Recipe testRecipe = new Recipe("Test Recipe", "img.com", "10 m", "10 m", new ArrayList<String>(),new ArrayList<String>(), "query", 0.0);
+		testRecipe.uniqueID = "3";
+		recList.add(testRecipe);
+		newUser.notRecipe.add(testRecipe);
+		newUser.notRecipe.add(testRecipe);
+    	
+		when(request.getSession()).thenReturn(session);
+   
+		newUser.username = "bram";
+		
+		when(session.getAttribute("userObj")).thenReturn(newUser);
+        when(request.getParameter("id")).thenReturn("recipe-1");
+        when(request.getParameter("list")).thenReturn("not");
+        when(request.getParameter("move")).thenReturn("up");
+        
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+       
+        when(response.getWriter()).thenReturn(pw);
+           
+        servlet.service(request, response);
+        assertEquals(1, 1);
+    }
+  	
       
 }
