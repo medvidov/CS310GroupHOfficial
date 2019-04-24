@@ -196,8 +196,8 @@
 	    	+ "Move To</div><div class=\"dropdown-menu\" aria-labelledby=\"DropdownMenu\" id=\"dropdown\">"
 	    	+ "<a class=\"dropdown-item\" id=\"explore\" onclick=\"mv(\'favorite\',\'restaurant\',\'"+ i +"\');\">Favorite List</a>"
 	    	+ "<a class=\"dropdown-item\" id=\"not\" onclick=\"mv(\'not\',\'restaurant\',\'"+ i +"\');\">Do Not Show List</a>"
-	    	+ "</div></button><button id = \"restaurant" + i + "UpButton\" onclick =\"moveUp(\'restaurant" + i + "\')\" class=\"btn btn-info col-3\">Up</button>"
-	    	+ "<button id = \"restaurant" + i + "DownButton\" onclick =\"moveDown(\'restaurant" + i + "\')\" class=\"btn btn-info col-3\">Down</button>"
+	    	+ "</div></button><button id = \"restaurant" + i + "UpButton\" onclick =\"moveUp(\'restaurant-" + i + "\', " + i + " )\" class=\"btn btn-info col-3\">Up</button>"
+	    	+ "<button id = \"restaurant" + i + "DownButton\" onclick =\"moveDown(\'restaurant-" + i + "\', " + i + ")\" class=\"btn btn-info col-3\">Down</button>"
 	    	+ "</div></div></div></div></div></div>";
 
 			num += 1;
@@ -228,26 +228,52 @@
 	    		+ "Move To</div><div class=\"dropdown-menu active\" aria-labelledby=\"DropdownMenu\">"
 	    		+ "<a class=\"dropdown-item\" id=\"explore\" onclick=\"mv(\'favorite\',\'recipe\',\'"+ i +"\');\">Favorite</a>"
 	    		+ "<a class=\"dropdown-item\" id=\"not\"  onclick=\"mv(\'not\',\'recipe\',\'"+ i +"\');\">Do Not Show</a>"
-	    		+ "</div></button><button id = \"recipe" + i + "UpButton\" onclick =\"moveUp(\'recipe" + i + "\')\" class=\"btn btn-info col-3\">"
-	    		+ "Up</button><button id = \"recipe" + i + "DownButton\" onclick =\"moveDown(\'recipe" + i + "\')\" class=\"btn btn-info col-3\">"
+	    		+ "</div></button><button id = \"recipe" + i + "UpButton\" onclick =\"moveUp(\'recipe-" + i + "\', " + i + ")\" class=\"btn btn-info col-3\">"
+	    		+ "Up</button><button id = \"recipe" + i + "DownButton\" onclick =\"moveDown(\'recipe-" + i + "\', " + i + ")\" class=\"btn btn-info col-3\">"
 	    		+ "Down</button></div></div></div></div></div></div>";
 	    	
 			num += 1;
 			
 			
 	    }
-	    function moveUp(id){
+	    function moveUp(id, index){
 	    	$curr = $("#"+id+"");
 	    	$onTop = $curr.prev();
 	    	$($curr).insertBefore($onTop);
 	    	
+	    	//reorder
+	    	if(index != 0){
+		    	var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function(){
+					if(this.readyState == 4 && this.status == 200){
+						location.href = "ToExplore.jsp";
+					}
+				}
+				xhttp.open("POST", "ReorderList?list=explore&id=" + id + "&move=up", true);
+				xhttp.send();
+	    	}
+	    	
 	    	return false;
 	    }
 	    
-	    function moveDown(id){
+	    function moveDown(id, index){
 	    	$curr = $("#"+id+"");
 	    	$below = $curr.next();
 	    	$($curr).insertAfter($below);
+	    	
+	    	var r = id.split("-");
+	    	
+	    	//reorder
+	    	if((r[0] == "restaurant" && index < restaurant.length - 1) || (r[0] == "recipe" && index < recipe.length - 1)){
+		    	var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function(){
+					if(this.readyState == 4 && this.status == 200){
+						location.href = "ToExplore.jsp";
+					}
+				}
+				xhttp.open("POST", "ReorderList?list=explore&id=" + id + "&move=down", true);
+				xhttp.send();
+	    	}
 	    	return false;
 	    }
 

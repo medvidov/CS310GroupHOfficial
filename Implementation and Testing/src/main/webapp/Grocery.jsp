@@ -18,6 +18,7 @@
 
     <!-- style  -->
     <link href="./css/main.css?version=5" rel="stylesheet">
+    <script src="https://use.fontawesome.com/c3025a07db.js"></script>
     
      <script>
    function tolist(list){
@@ -114,11 +115,24 @@
 	head.style.fontSize = "25px";
 	for(var i = 0; i < gList.length; i++){
 		if(!gList[i].check){
-			head.innerHTML += "<div class=\"col-12\"><input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\"><span id=\"inner" + i + "\">" + gList[i].str + "</span></div>";
+			head.innerHTML += "<div class=\"col-12\"><input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\"><span id=\"inner" + i + "\">" + gList[i].str + "</span>"
+			+ "<i class=\"fa fa-times\" aria-hidden=\"true\" style=\"color: red; margin-left: 10px;\" onclick=\"removeGrocery(" + i + ");\"></i></div>";
 		}
 		else{
-			head.innerHTML += "<div class=\"col-12\"><input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\" checked><span id=\"inner" + i + "\"><strike><i>" + gList[i].str + "</strike></i></span></div>";
+			head.innerHTML += "<div class=\"col-12\"><input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\" checked><span id=\"inner" + i + "\"><strike><i>" + gList[i].str + "</strike></i></span>"
+			+ "<i class=\"fa fa-times\" aria-hidden=\"true\" style=\"color: red; margin-left: 10px;\" onclick=\"removeGrocery(" + i + ");\"></i></div>";
 		}	
+	}
+	
+	function removeGrocery(id){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function(){
+			if(this.readyState == 4 && this.status == 200){
+				location.href="Grocery.jsp"
+			}
+		}
+		xhttp.open("POST", "RemoveGrocery?id=" + id, true);
+		xhttp.send();
 	}
 	
 	//add checked values
@@ -145,7 +159,7 @@
 		}
 	}
   		
-    
+	//console.log(document.documentElement.innerHTML);
     </script>
 
 </body>

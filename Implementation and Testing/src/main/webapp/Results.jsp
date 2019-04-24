@@ -87,7 +87,7 @@
 <body onload="getResults()">
 
 
-    <div class="bg"></div>
+    <div id="back"></div>
 	<!--  navbar  -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="Search.jsp">I'm Hungry</a>
@@ -318,9 +318,24 @@
             
             if(queries != null){
 	            for(var i = 0; i < queries.length; i++){
+	            	//parse
+	            	var collage = images[i].split(" ");
+	            	
+	            	
 		            prev.innerHTML +=  "<a href=\"#home\" onclick=\"prevQuery(\'" + queries[i] +"\');\"><div class=\"card z-depth-5\" style=\"height: 300px;\">"
-		            + "<img class=\"card-img-top\" src=\"" + images[i] + "\" alt=\"Card image\" style=\"width: 300px;height: 200px;\">"
-		            + "<div class=\"card-body\"><h4 class=\"card-title\" style=\"color: black;\">" + queries[i] + "</h4>"
+		            + "<div class=\"container-fluid\"><div class=\"row\">"
+		            + "<img class=\"card-img-top\" src=\"" + collage[0] + "\" alt=\"Card image\" style=\"width: 60px;height: 100px;\">"
+		            + "<img class=\"card-img-top\" src=\"" + collage[1] + "\" alt=\"Card image\" style=\"width: 60px;height: 100px;\">"
+		            + "<img class=\"card-img-top\" src=\"" + collage[2] + "\" alt=\"Card image\" style=\"width: 60px;height: 100px;\">"
+		            + "<img class=\"card-img-top\" src=\"" + collage[3] + "\" alt=\"Card image\" style=\"width: 60px;height: 100px;\">"
+		            + "<img class=\"card-img-top\" src=\"" + collage[4] + "\" alt=\"Card image\" style=\"width: 60px;height: 100px;\">"
+		            + "</div><div class=\"row\">"
+		            + "<img class=\"card-img-top\" src=\"" + collage[5] + "\" alt=\"Card image\" style=\"width: 60px;height: 100px;\">"
+		            + "<img class=\"card-img-top\" src=\"" + collage[6] + "\" alt=\"Card image\" style=\"width: 60px;height: 100px;\">"
+		            + "<img class=\"card-img-top\" src=\"" + collage[7] + "\" alt=\"Card image\" style=\"width: 60px;height: 100px;\">"
+		            + "<img class=\"card-img-top\" src=\"" + collage[8] + "\" alt=\"Card image\" style=\"width: 60px;height: 100px;\">"
+		            + "<img class=\"card-img-top\" src=\"" + collage[9] + "\" alt=\"Card image\" style=\"width: 60px;height: 100px;\">"
+		            + "</div></div><div class=\"card-body\"><h4 class=\"card-title\" style=\"color: black;\">" + queries[i] + "</h4>"
 		            + "</div></div></a>";
 	            }
             }
@@ -387,7 +402,7 @@
     	}
 
     	
-    	//console.log(document.documentElement.innerHTML);
+    	//console.log(document.getElementById('prevQuery').innerHTML);
     </script>
 
 </body>

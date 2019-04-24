@@ -13,6 +13,7 @@ public class User implements Serializable {
 	public ArrayList<Restaurant> notRestaurant = new ArrayList<Restaurant>();
 	public ArrayList<Recipe> notRecipe = new ArrayList<Recipe>();
 	public ArrayList<Grocery> gList = new ArrayList<Grocery>();
+	public ArrayList<Results> prevQuery = new ArrayList<Results>();
 	
 	
 	public User() {
@@ -204,5 +205,8 @@ public class User implements Serializable {
 		}
 	}
 	
+	public void removeGrocery(int id) {
+		gList.remove(id);
+	}
 
 }

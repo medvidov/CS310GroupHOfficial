@@ -53,7 +53,7 @@
 </head>
 
 <body>
- <div class="bg"></div>
+ <div id="back"></div>
 	<!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="Search.jsp">I'm Hungry</a>

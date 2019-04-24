@@ -98,6 +98,15 @@
                         </div>
                     </form>
                     <!-- end of form -->
+                    
+                    <p class="mt-5 mb-3 text-muted text-center">Our password policy:</p>
+			        <ul class="text-center">
+			            <li>Be at least 8 characters</li>
+			            <li>Use of lowercase and uppercase characters</li>
+			            <li>have at least one number</li>
+			            <li>Have at least one special characters(!, %, _, -, $, %, @, #)</li>
+			        </ul>
+			        
                 </div>
             </div>
         </div>
@@ -128,6 +137,8 @@
 
         document.querySelector("#form").onsubmit = function() {
             console.log("hello");
+            
+            var pass = document.querySelector("#myInput").value;
 
             if (document.querySelector("#username").value.trim().length < 1 ||
                 document.querySelector("#myInput").value.trim().length < 1 ||
@@ -145,6 +156,40 @@
                 return false;
             }
             
+          //checks that the pass length is at least 12
+            if (document.querySelector("#myInput").value.trim().length < 8) {
+                document.querySelector("#test").innerHTML = "<strong><div style=\" color:red;\" id=\"error\">Password needs to be at least 8 characters!</div></strong><br>";
+                return false;
+            }
+
+
+            //check that the password has a number
+            if (!(/\d/.test(document.querySelector("#myInput").value))) {
+                document.querySelector("#test").innerHTML = "<strong><div style=\"color:red;\" id=\"error\">Password needs to contain at least one number!</div></strong><br>";
+                return false;
+            }
+
+            //checks at least one capital
+            if (pass.toLowerCase() == pass || pass.toUpperCase() == pass) {
+                document.querySelector("#test").innerHTML = "<strong><div style=\"color:red;\" id=\"error\">Password needs to have a mix of lower and upper case characters!</div></strong><br>";
+                return false;
+            }
+
+            var special = false;
+            //at least one special character
+            for (var i in pass) {
+                if (!pass[i].match(/[a-z]/i) &&
+                    !pass[i].match(/[0-9]/)) {
+                    special = true;
+                    break;
+                }
+            }
+
+            if (!special) {
+                document.querySelector("#test").innerHTML = "<strong><div style=\"color:red;\" id=\"error\">Password needs to contain special characters!</div></strong><br>";
+                return false;
+            }
+            
             //checks if username has been taken
             db.ref('/user').once('value').then(function(snapshot) {
   				var myusers = snapshot.val();
@@ -156,7 +201,6 @@
   						return false;
   					}
   				}
-  				
 			});
 
             document.querySelector("#error").innerHTML = "User has been created!";

@@ -49,8 +49,32 @@ public class PreviousQuery extends HttpServlet {
 		String filename = request.getParameter("filename");
 		ObjectMapper mapper = new ObjectMapper();
 		
+		User thisUser;
+		JSONObject a = null;
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("userObj") == null) {
+			System.out.println("previous query:new user");
+			thisUser = new User();
+//			if(!thisUser.username.equals("")) {
+//				a = JsonReader.readJsonFromUrl("https://imhungry-64e63.firebaseio.com/user/prevQuery-" + thisUser.username + "/" + filename + ".json");
+//			}
+//			else {
+				a = JsonReader.readJsonFromUrl("https://imhungry-64e63.firebaseio.com/newQueries/" + filename + ".json");
+			//}
+		} else {
+			thisUser = (User)session.getAttribute("userObj");
+			System.out.println("previous query:same user");
+			if(!thisUser.username.equals("")) {
+				a = JsonReader.readJsonFromUrl("https://imhungry-64e63.firebaseio.com/user/prevQuery-" + thisUser.username + "/" + filename + ".json");
+			}
+			else {
+				a = JsonReader.readJsonFromUrl("https://imhungry-64e63.firebaseio.com/newQueries/" + filename + ".json");
+			}
+		}
+		
 		//using firebase
-		JSONObject a = JsonReader.readJsonFromUrl("https://imhungry-64e63.firebaseio.com/newQueries/" + filename + ".json");
+		
 		
 
 		//File file = new File(filename + ".json");
@@ -61,23 +85,15 @@ public class PreviousQuery extends HttpServlet {
 		ArrayList<String> imageResults = myres.imageList;
 		double rad = myres.rad;
 		int opt = myres.options;
-		
-	
-		User thisUser;
-		
-		HttpSession session = request.getSession();
-		if(session.getAttribute("userObj") == null) {
-//			System.out.println("previous query:new user");
-			thisUser = new User();
-//
-		} else {
-			thisUser = (User)session.getAttribute("userObj");
-			System.out.println("previous query:same user");
-		}
-		
+
 		Database db = new Database();
 		db.finish = false;
-		db.getPrevQuery();
+		if(!thisUser.username.equals("")) {
+			db.getUserPrevQuery(thisUser);
+		}
+		else {
+			db.getPrevQuery();
+		}
 		
 		while(!db.finish) {
 			//System.out.println("a");
@@ -95,11 +111,12 @@ public class PreviousQuery extends HttpServlet {
 		//get previous query
 		ArrayList<String> previousQueries = new ArrayList<String>();
 		ArrayList<String> previousImg = new ArrayList<String>();
-		for(int i = 0; i < db.prev.size(); i++) {
+		for(int i = db.prev.size() - 1; i > -1; i--) {
 			//System.out.println(db.prev.get(i));
 			String token[] = db.prev.get(i).split(" ");
 			previousQueries.add(token[0]);
-			previousImg.add(token[1]);
+			previousImg.add(token[1] + " " + token[2] + " " + token[3]+ " " + token[4]+ " " + token[5]
+					+ " " + token[6]+ " " + token[7]+ " " + token[8]+ " " + token[9]+ " " + token[10]);
 		}
 		
 		//setting session variable

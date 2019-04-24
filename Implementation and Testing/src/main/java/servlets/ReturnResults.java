@@ -109,8 +109,14 @@ public class ReturnResults extends HttpServlet {
 
 			Database db = new Database();
 			db.finish = false;
-			db.getPrevQuery();
-			db.addNewQuery(query, myres);
+			if(!thisUser.username.equals("")) {
+				db.getUserPrevQuery(thisUser);
+				db.addUserNewQuery(thisUser, query, myres);
+			}
+			else {
+				db.getPrevQuery();
+				db.addNewQuery(query, myres);
+			}
 			
 			while(!db.finish) {
 				//System.out.println("a");
@@ -128,11 +134,12 @@ public class ReturnResults extends HttpServlet {
 			//get previous query
 			ArrayList<String> previousQueries = new ArrayList<String>();
 			ArrayList<String> previousImg = new ArrayList<String>();
-			for(int i = 0; i < db.prev.size(); i++) {
+			for(int i = db.prev.size() - 1; i > -1; i--) {
 				//System.out.println(db.prev.get(i));
 				String token[] = db.prev.get(i).split(" ");
 				previousQueries.add(token[0]);
-				previousImg.add(token[1]);
+				previousImg.add(token[1] + " " + token[2] + " " + token[3]+ " " + token[4]+ " " + token[5]
+						+ " " + token[6]+ " " + token[7]+ " " + token[8]+ " " + token[9]+ " " + token[10]);
 			}
 			
 			//setting session variable

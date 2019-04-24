@@ -3,6 +3,7 @@ package objects;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,10 +41,8 @@ public class Database {
 		}
 		
 		//CHANGE THIS
-		// /home/student/git/CS310GroupHOfficial/Implementation and Testing/src/main/webapp
-		// C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\webapp\\
 		FileInputStream serviceAccount =
-				  new FileInputStream("/home/student/git/CS310GroupHOfficial/Implementation and Testing/src/main/webapp/imhungry-64e63-firebase-adminsdk-5u9ua-cef44f88a3.json");
+				  new FileInputStream("C:\\Users\\Bram\\Desktop\\workspace\\310GroupH\\src\\main\\webapp\\imhungry-64e63-firebase-adminsdk-5u9ua-cef44f88a3.json");
 
 				FirebaseOptions option = new FirebaseOptions.Builder()
 				  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -56,7 +55,6 @@ public class Database {
 	
 	//add new query to database
 	public void addNewQuery(String query, Results myres) {
-		//use time as a variable to determine the most recent queries
 		myres.time = Instant.now().toEpochMilli() / 10000;
 		root.child("newQueries").child(query).setValueAsync(myres);
 	}
@@ -65,29 +63,63 @@ public class Database {
 	public void getPrevQuery(){
 		
 		root.child("newQueries").orderByChild("time").addListenerForSingleValueEvent(
-			new ValueEventListener() {
-				@Override
-				public void onDataChange(DataSnapshot dataSnapshot) {
-					prev = new ArrayList<String>();
-					//System.out.println("SIZE: " + dataSnapshot.getChildrenCount());
-					//go through each child
-					for(DataSnapshot ds : dataSnapshot.getChildren()) {
-						Results boom = ds.getValue(Results.class);
-						//get back all 10 images
-						prev.add(ds.getKey() + " " + boom.imageList.get(0) + " " +  boom.imageList.get(1)
-						+ " " + boom.imageList.get(2) + " " + boom.imageList.get(3) + " " +  boom.imageList.get(4)
-						+ " " + boom.imageList.get(5) + " " + boom.imageList.get(6) + " " +  boom.imageList.get(7)
-						+ " " + boom.imageList.get(8) + " " + boom.imageList.get(9));
-						//System.out.println(prev.get(0));
+				new ValueEventListener() {
+					@Override
+					public void onDataChange(DataSnapshot dataSnapshot) {
+						prev = new ArrayList<String>();
+						//System.out.println("SIZE: " + dataSnapshot.getChildrenCount());
+						//go through each child
+						for(DataSnapshot ds : dataSnapshot.getChildren()) {
+							Results boom = ds.getValue(Results.class);
+							//System.out.println(ds.getKey() + " -> " + boom.imageList.get(0));
+							prev.add(ds.getKey() + " " + boom.imageList.get(0) + " " +  boom.imageList.get(1)
+							+ " " + boom.imageList.get(2) + " " + boom.imageList.get(3) + " " +  boom.imageList.get(4)
+							+ " " + boom.imageList.get(5) + " " + boom.imageList.get(6) + " " +  boom.imageList.get(7)
+							+ " " + boom.imageList.get(8) + " " + boom.imageList.get(9));
+							//System.out.println(prev.get(0));
+						}
+						finish = true;
 					}
-					finish = true;
+					@Override
+		            public void onCancelled(DatabaseError databaseError) {
+		                // read query is cancelled.
+		            }
 				}
-				@Override
-			    public void onCancelled(DatabaseError databaseError) {
-				// read query is cancelled.
-			    }
-			}
-		);
+				);
+	}
+	
+	//db.getUserPrevQuery(thisUser);
+	public void getUserPrevQuery(User myuser){
+		
+		root.child("user").child("prevQuery-" + myuser.username).orderByChild("time").addListenerForSingleValueEvent(
+				new ValueEventListener() {
+					@Override
+					public void onDataChange(DataSnapshot dataSnapshot) {
+						prev = new ArrayList<String>();
+						//System.out.println("SIZE: " + dataSnapshot.getChildrenCount());
+						//go through each child
+						for(DataSnapshot ds : dataSnapshot.getChildren()) {
+							Results boom = ds.getValue(Results.class);
+							//System.out.println(ds.getKey() + " -> " + boom.imageList.get(0));
+							prev.add(ds.getKey() + " " + boom.imageList.get(0) + " " +  boom.imageList.get(1)
+							+ " " + boom.imageList.get(2) + " " + boom.imageList.get(3) + " " +  boom.imageList.get(4)
+							+ " " + boom.imageList.get(5) + " " + boom.imageList.get(6) + " " +  boom.imageList.get(7)
+							+ " " + boom.imageList.get(8) + " " + boom.imageList.get(9));
+							//System.out.println(prev.get(0));
+						}
+						finish = true;
+					}
+					@Override
+		            public void onCancelled(DatabaseError databaseError) {
+		                // read query is cancelled.
+		            }
+				}
+				);
+	}
+	
+	public void addUserNewQuery(User myuser, String query, Results myres) {
+		myres.time = Instant.now().toEpochMilli() / 10000;
+		root.child("user").child("prevQuery-" + myuser.username).child(query).setValueAsync(myres);
 	}
 	
 	//create user
@@ -119,6 +151,8 @@ public class Database {
 		
 		return myres;
 	}
+	
+
 	
 	//check user and login exist
 	public void checkUser() {
