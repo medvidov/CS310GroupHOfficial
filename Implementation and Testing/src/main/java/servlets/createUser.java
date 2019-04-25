@@ -46,48 +46,36 @@ public class createUser extends HttpServlet {
 		
 		//create user
 		Database db = new Database();
-		db.checkUser();
-		while(!db.finish) {
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			if(db.finish) {
-				System.out.println("back");
-				break;
-			}
+//		db.checkUser();
+//		while(!db.finish) {
+//			try {
+//				TimeUnit.SECONDS.sleep(1);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			if(db.finish) {
+//				System.out.println("back");
+//				break;
+//			}
+//		}
+//		
+//		for(int i = 0; i < db.prev.size(); i++) {
+//			String all = db.prev.get(i);
+//			String token[] = all.split("-");
+//			if(token[0].equals(username)) {
+//				System.out.println("user has been taken");
+//				check = "no";
+//				break;
+//			}
+//		}
+		
+		
+		db.createUser(username, password);
+		RequestDispatcher dispatch = request.getRequestDispatcher("Sign.jsp");
+		if (!(dispatch == null)) {
+			dispatch.forward(request,  response);
 		}
 		
-		for(int i = 0; i < db.prev.size(); i++) {
-			String all = db.prev.get(i);
-			String token[] = all.split("-");
-			if(token[0].equals(username)) {
-				System.out.println("user has been taken");
-				check = "no";
-				break;
-			}
-		}
-		
-		
-		
-		if(check.equals("yes")) {
-			System.out.println("yes");
-			db.createUser(username, password);
-			RequestDispatcher dispatch = request.getRequestDispatcher("Sign.jsp");
-			session.setAttribute("error", "no");
-			if (!(dispatch == null)) {
-				dispatch.forward(request,  response);
-			}
-		}
-		else {
-			System.out.println("no");
-			RequestDispatcher dispatch = request.getRequestDispatcher("Sign.jsp");
-			session.setAttribute("error", "yes");
-			if (!(dispatch == null)) {
-				dispatch.forward(request,  response);
-			}
-		}
 	}
 
 

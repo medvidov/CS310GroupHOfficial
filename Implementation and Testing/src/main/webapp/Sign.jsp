@@ -115,7 +115,8 @@
     <script>
     	
   		//check error
-		var boom = '<%= session.getAttribute("error") %>';
+  		/*
+		var boom = '<%= session.getAttribute("errorSign") %>';
 		
 		if(boom == "yes"){
 			console.log("error");
@@ -124,6 +125,7 @@
 		else if(boom == "no"){
 			document.querySelector("#error").innerHTML = "User has been created!";
 		}
+		*/
     	
     	var config = {
             apiKey: "AIzaSyBCz9u8fUjOWyCTARyuNI4iE85gMUPIYHw",
@@ -206,7 +208,7 @@
             done = false;
             
             //checks if username has been taken
-            /*
+            
             db.ref('/user').once('value').then(function(snapshot) {
   				var myusers = snapshot.val();
   				for(var key in myusers){
@@ -227,11 +229,10 @@
 				xhttp.open("POST", "createUser?username=" + username + "&password=" + pass , true);
 				xhttp.send();
 			});
-			*/
             
             //document.querySelector("#error").innerHTML = "User has been created!";
 
-            return true;
+            return false;
         }
 
     </script>
