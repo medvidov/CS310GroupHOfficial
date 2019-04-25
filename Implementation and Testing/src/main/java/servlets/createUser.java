@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 import com.google.gson.Gson;
 
@@ -39,14 +42,51 @@ public class createUser extends HttpServlet {
 	
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		String check = "yes";
 		
 		//create user
 		Database db = new Database();
-		db.createUser(username, password);
+		db.checkUser();
+		while(!db.finish) {
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if(db.finish) {
+				System.out.println("back");
+				break;
+			}
+		}
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("Sign.jsp");
-		if (!(dispatch == null)) {
-			dispatch.forward(request,  response);
+		for(int i = 0; i < db.prev.size(); i++) {
+			String all = db.prev.get(i);
+			String token[] = all.split("-");
+			if(token[0].equals(username)) {
+				System.out.println("user has been taken");
+				check = "no";
+				break;
+			}
+		}
+		
+		
+		
+		if(check.equals("yes")) {
+			System.out.println("yes");
+			db.createUser(username, password);
+			RequestDispatcher dispatch = request.getRequestDispatcher("Sign.jsp");
+			session.setAttribute("error", "no");
+			if (!(dispatch == null)) {
+				dispatch.forward(request,  response);
+			}
+		}
+		else {
+			System.out.println("no");
+			RequestDispatcher dispatch = request.getRequestDispatcher("Sign.jsp");
+			session.setAttribute("error", "yes");
+			if (!(dispatch == null)) {
+				dispatch.forward(request,  response);
+			}
 		}
 	}
 
