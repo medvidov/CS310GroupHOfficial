@@ -90,11 +90,10 @@
             <script>
             
             	//check error
-	            var link = window.location.href;
-	    		var url = new URL(link);
-	    		var id = url.searchParams.get("error");
+	    		var boom = '<%= session.getAttribute("error") %>';
 	    		
-	    		if(id != null){
+	    		if(boom == "no"){
+	    			console.log("error");
 	    			document.querySelector("#test").innerHTML = "<strong><div style=\"color:red;\" id=\"error\">Login Failed!</div></strong><br>";
 	    		}
 	    		

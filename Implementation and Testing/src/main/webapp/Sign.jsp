@@ -113,6 +113,18 @@
     </div>
 	<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
     <script>
+    	
+  		//check error
+		var boom = '<%= session.getAttribute("error") %>';
+		
+		if(boom == "yes"){
+			console.log("error");
+			document.querySelector("#test").innerHTML = "<strong><div style=\"color:red;\" id=\"error\">Username has been taken!</div></strong><br>";
+		}
+		else if(boom == "no"){
+			document.querySelector("#error").innerHTML = "User has been created!";
+		}
+    	
     	var config = {
             apiKey: "AIzaSyBCz9u8fUjOWyCTARyuNI4iE85gMUPIYHw",
             authDomain: "imhungry-64e63.firebaseapp.com",
@@ -139,6 +151,7 @@
             console.log("hello");
             
             var pass = document.querySelector("#myInput").value;
+            var username = document.querySelector("#username").value.trim();
 
             if (document.querySelector("#username").value.trim().length < 1 ||
                 document.querySelector("#myInput").value.trim().length < 1 ||
@@ -190,20 +203,33 @@
                 return false;
             }
             
+            done = false;
+            
             //checks if username has been taken
+            /*
             db.ref('/user').once('value').then(function(snapshot) {
   				var myusers = snapshot.val();
   				for(var key in myusers){
-  					console.log(key + "->" + myusers[key]);
+  					//console.log(key + "->" + myusers[key]);
   					var token = key.split("-");
   					if(token[0] == document.querySelector("#username").value){
   						document.querySelector("#test").innerHTML = "<strong><div style=\"color:red;\" id=\"error\">Username has already been taken!</div></strong><br>";
   						return false;
   					}
   				}
+  				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function(){
+					if(this.readyState == 4 && this.status == 200){
+						document.querySelector("#error").innerHTML = "User has been created!";
+						return false;
+					}
+				}
+				xhttp.open("POST", "createUser?username=" + username + "&password=" + pass , true);
+				xhttp.send();
 			});
-
-            document.querySelector("#error").innerHTML = "User has been created!";
+			*/
+            
+            //document.querySelector("#error").innerHTML = "User has been created!";
 
             return true;
         }

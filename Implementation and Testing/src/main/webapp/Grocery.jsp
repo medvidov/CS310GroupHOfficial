@@ -53,17 +53,17 @@
  <div id="back"></div>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="Search.jsp">I'm Hungry</a>
+        <a style = "font-size: 25px;" class="navbar-brand" href="Search.jsp">I'm Hungry</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="Results.jsp">Results</a>
+                    <a style = "font-size: 20px;" class="nav-link" href="Results.jsp">Results</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a style = "font-size: 20px;" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Lists Management
                     </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

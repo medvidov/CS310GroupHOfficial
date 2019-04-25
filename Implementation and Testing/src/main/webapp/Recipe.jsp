@@ -63,17 +63,17 @@
 
 	<!--  navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="Search.jsp">I'm Hungry</a>
+        <a style = "font-size: 25px;" class="navbar-brand" href="Search.jsp">I'm Hungry</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="Results.jsp">Results</a>
+                    <a style = "font-size: 20px;" class="nav-link" href="Results.jsp">Results</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a  style = "font-size: 20px;" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Lists Management
                     </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -94,16 +94,16 @@
             <div class="col-8">
                 <div class="listTitle" id="title" style="font-weight: bold;font-size: 5vw;">Feta-Stuffed Hamburgers</div>
                 <div class="container-fluid">
-                    <div class="row">
+                    <div class="row btn-group-lg">
                         <div class="col-12  col-md-4">
-                            <a href="javascript:window.print();"><button class="btn btn-info wth">Printable View</button></a>
+                            <a href="javascript:window.print();"><button style = "font-size: 25px;" class="btn btn-info wth">Printable View</button></a>
                         </div>
                         <div class="col-12 col-md-4">
-                            <button class="btn btn-info " style="width:200px;" onclick="AddToGrocery();" id="addGrocery">Add to Grocery List</button>
+                            <button style = "font-size: 25px;" class="btn btn-info " style="width:200px;" onclick="AddToGrocery();" id="addGrocery">Add to Grocery List</button>
                         </div>
                         <div class="col-12 col-md-4">
                            <div class="dropdown">
-							  <button class="btn btn-info dropdown-toggle" type="button" id="addTo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <button style = "font-size: 25px;" class="btn btn-info dropdown-toggle" type="button" id="addTo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							    Add To List
 							  </button>
 							  <div class="dropdown-menu" aria-labelledby="addTo">

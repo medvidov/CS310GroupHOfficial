@@ -70,6 +70,8 @@ public class CheckLogin extends HttpServlet {
 		if(check.equals("yes")) {
 			System.out.println("yes");
 			RequestDispatcher dispatch = request.getRequestDispatcher("/GetUser?username=" + username + "&password=" + password);
+			HttpSession session = request.getSession();
+			session.setAttribute("error", "yes");
 			if(dispatch != null) {
 				dispatch.forward(request,  response);
 			}
@@ -77,6 +79,8 @@ public class CheckLogin extends HttpServlet {
 		else {
 			System.out.println("no");
 			RequestDispatcher dispatch = request.getRequestDispatcher("Login.jsp?error=failed");
+			HttpSession session = request.getSession();
+			session.setAttribute("error", "no");
 			if(dispatch != null) {
 				dispatch.forward(request,  response);
 			}
