@@ -67,3 +67,15 @@ Then(/^I should see a recipes groceries$/) do
  #page.should have_content('1/3 cup chicken broth')
  #page.should have_content('1 tablespoon oyster sauce')
 end
+
+When(/^I click the red "x" next to a grocery item$/) do
+	find('#delete10')
+end
+
+Then(/^that item should be deleted$/) do
+	page.should have_no_content('1/3 cup chicken broth')
+end
+
+Then(/^that item should still be deleted$/) do
+	page.should have_no_content('1/3 cup chicken broth')
+end
