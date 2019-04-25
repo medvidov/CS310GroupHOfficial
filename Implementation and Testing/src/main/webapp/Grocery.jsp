@@ -114,15 +114,15 @@
 	
 	head.style.fontSize = "25px";
 	for(var i = 0; i < gList.length; i++){
-		if(!gList[i].check){
-			head.innerHTML += "<div class=\"col-12\"><input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\"><span id=\"inner" + i + "\">" + gList[i].str + "</span>"
-			+ "<i class=\"fa fa-times\" aria-hidden=\"true\" style=\"color: red; margin-left: 10px;\" onclick=\"removeGrocery(" + i + ");\"></i></div>";
-		}
-		else{
-			head.innerHTML += "<div class=\"col-12\"><input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\" checked><span id=\"inner" + i + "\"><strike><i>" + gList[i].str + "</strike></i></span>"
-			+ "<i class=\"fa fa-times\" aria-hidden=\"true\" style=\"color: red; margin-left: 10px;\" onclick=\"removeGrocery(" + i + ");\"></i></div>";
-		}	
-	}
+        if(!gList[i].check){
+            head.innerHTML += "<div class=\"col-12\"><input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\"><span id=\"inner" + i + "\">" + gList[i].str + "</span>"
+            + "<i class=\"fa fa-times\" id=\"delete" + i + "\" aria-hidden=\"true\" style=\"color: red; margin-left: 10px;\" onclick=\"removeGrocery(" + i + ");\"></i></div>";
+        }
+        else{
+            head.innerHTML += "<div class=\"col-12\"><input type=\"checkbox\" id=\"" + i + "\" onclick=\"test(event);\" checked><span id=\"inner" + i + "\"><strike><i>" + gList[i].str + "</strike></i></span>"
+            + "<i class=\"fa fa-times\" id=\"delete" + i + "\" aria-hidden=\"true\" style=\"color: red; margin-left: 10px;\" onclick=\"removeGrocery(" + i + ");\"></i></div>";
+        }    
+    }
 	
 	function removeGrocery(id){
 		var xhttp = new XMLHttpRequest();
