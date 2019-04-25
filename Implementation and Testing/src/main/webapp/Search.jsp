@@ -50,16 +50,7 @@
             background-size: cover;
             background-position: center;
         }
-        #buttonDiv{
-        	display: flex;
-        	width: 100%;
-        	flex-direction: column;
-        	align-content: flex-end;
-        }
-        
-        #buttonDiv button{
-       		width: 120px;
-       }
+       
         
 
     </style>
@@ -137,21 +128,21 @@
     		if(user.username != ""){
     			document.getElementById("login").innerHTML = "<div class=\"col-1\">"
     				+ "<div style=\"font-weight: bold;font-size: 25px;\">Hi " + user.username + "!</div>"
-    			    + "</div><div class=\"col-1\"><button class=\"btn btn-secondary\" onclick=\"logout();\">Log out</button>"
-    			    + "</div>;";
+    			    + "</div><div class=\"col-1\"><button style\"width: 120px; margin-left: 40px;\" class=\"btn btn-secondary\" onclick=\"logout();\">Log out</button>"
+    			    + "</div>";
     		}
     		else{
     			document.getElementById("login").innerHTML = "<div class=\"col-1\">"
-    				+ "<button class=\"btn btn-secondary\" onclick=\"location.href='Login.jsp';\">Login</button>"
-    			    + "</div><div class=\"col-1\"><button class=\"btn btn-secondary\" onclick=\"location.href='Sign.jsp';\">Sign Up</button>"
-    			    + "</div>;";
+    				+ "<button style=\"font-size: 25px; width: 120px\" class=\"btn btn-secondary\" onclick=\"location.href='Login.jsp';\">Login</button>"
+    			    + "</div><div class=\"col-1\"><button style=\"font-size: 25px; width: 120px; margin-left: 40px;\" class=\"btn btn-secondary\" onclick=\"location.href='Sign.jsp';\">Sign Up</button>"
+    			    + "</div>";
     		}
     	}
     	else{
     		document.getElementById("login").innerHTML = "<div class=\"col-1\">"
-			+ "<button class=\"btn btn-secondary\" onclick=\"location.href='Login.jsp';\">Login</button>"
-		    + "</div><div class=\"col-1\"><button class=\"btn btn-secondary\" onclick=\"location.href='Sign.jsp';\">Sign Up</button>"
-		    + "</div>;";
+			+ "<button style=\"font-size: 25px; width: 120px;\" class=\"btn btn-secondary\" onclick=\"location.href='Login.jsp';\">Login</button>"
+		    + "</div><div class=\"col-1\"><button style=\"font-size: 25px; width: 120px; margin-left: 40px;\" class=\"btn btn-secondary\" onclick=\"location.href='Sign.jsp';\">Sign Up</button>"
+		    + "</div>";
     	}
     	
     	function logout(){

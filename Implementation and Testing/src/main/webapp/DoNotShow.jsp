@@ -20,7 +20,15 @@
 
     <!-- style  -->
     <link href="./css/main.css?version=5" rel="stylesheet">
+    <style>
+     .restaurant button{
+    	font-size: 20px;
+    	}
     
+    .recipe button{
+    	font-size: 20px;
+   	 }
+    </style>
      <script>
    function tolist(list){
 		var xhttp = new XMLHttpRequest();
@@ -54,17 +62,17 @@
     <div id="back"></div>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="Search.jsp">I'm Hungry</a>
+        <a style = "font-size: 25px;" class="navbar-brand" href="Search.jsp">I'm Hungry</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="Results.jsp">Results</a>
+                    <a style = "font-size: 20px;" class="nav-link" href="Results.jsp">Results</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a style = "font-size: 20px;" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Lists Management
                     </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -175,7 +183,7 @@
 	    //for every, restaurant create it
 	    for(i = 0;i < restaurant.length; i++){
 	    	var res = restaurant[i];
-	    	li.innerHTML += "<div id =\"restaurant" + i + "\" class=\"row justify-content-center\"><div class=\"col-8\">" 
+	    	li.innerHTML += "<div id =\"restaurant" + i + "\" class=\"row restaurant justify-content-center\"><div class=\"col-8\">" 
 	    	+ "<div class=\"res1 card border-primary mb-3 z-depth-5\">"
 	    	+ "<div class=\"card-header\"><a style=\"float: left\" href=\"Restaurant.jsp?id=" + res.uniqueID + "\">"
 	    	+ "<h3>" + res.name + "</h3></a><div style=\"float: left; margin-left: 50px;margin-top: 5px; font-size: 21px;\"><strong>"
@@ -204,7 +212,7 @@
 	    	if(rec.price == null){
 	    		rec.price = "$";
 	    	}
-	    	li.innerHTML += "<div id =\"recipe" + i + "\" class=\"row justify-content-center\"><div class=\"col-8\"><div class=\"res1 card border-danger mb-3 z-depth-5\">"
+	    	li.innerHTML += "<div id =\"recipe" + i + "\" class=\"row recipe justify-content-center\"><div class=\"col-8\"><div class=\"res1 card border-danger mb-3 z-depth-5\">"
 	    		+ "<div class=\"card-header\"><a style=\"float: left\" href=\"Recipe.jsp?id=" + rec.uniqueID + "\">"
 	    		+ "<h3>"+rec.recipeName+"</h3></a><div style=\"float: left; margin-left: 50px;margin-top: 5px; font-size: 21px;\"><strong>"
 	    		+ rec.rating + " <i class=\"fa fa-star\" aria-hidden=\"true\" style=\"color: mediumvioletred;\"></i>"
