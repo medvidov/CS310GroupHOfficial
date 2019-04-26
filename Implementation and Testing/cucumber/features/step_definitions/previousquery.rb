@@ -45,7 +45,6 @@ end
 
 Then(/^I should see a button with label "([^"]*)"$/) do |string|
 page.should have_content(string)
-
 end
 
 Then(/^I should see "([^"]*)" pq listed first$/) do |arg|

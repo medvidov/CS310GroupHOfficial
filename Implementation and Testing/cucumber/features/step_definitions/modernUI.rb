@@ -4,11 +4,22 @@ Then(/^I should see a background image$/) do
     bg.matches_style?('background-image' => 'url(img/background.jpg)')
 end
 
+Then(/^I should see a background image back$/) do
+    page.should have_css('div.bg')
+    bg = page.find('div.bg')
+    bg.matches_style?('background-image' => 'url(img/background.jpg)')
+end
+
 Then(/^I should see styled font different from default$/) do
     #fontsize1 = find('div.title').native.css_value('font-size')
     fontsize2 = find('body').native.css_value('font-size')
     #expect(fontsize1).not_to eq(16)
     expect(fontsize2).not_to eq(16)
+end
+
+Then(/^I should see styled buttons$/) do
+    b = first('.btn-secondary')
+    b.matches_style?('background-color' => 'rgb(38,166,154)', 'font-size' => /25/)
 end
 
 Then(/^I should see a navbar$/) do

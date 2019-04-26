@@ -89,7 +89,7 @@
 <body onload="getResults()">
 
 
-    <div id="back"></div>
+    <div id="back" class="bg"></div>
 	<!--  navbar  -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a  style = "font-size: 25px;" class="navbar-brand" href="Search.jsp">I'm Hungry</a>

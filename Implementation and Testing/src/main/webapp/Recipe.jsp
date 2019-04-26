@@ -59,7 +59,7 @@
 <body>
 
     
-    <div id="back"></div>
+    <div id="back" class="bg"></div>
 
 	<!--  navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

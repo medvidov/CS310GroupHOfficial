@@ -11,6 +11,10 @@ Given(/^I log the user out$/) do
 
 end
 
+Given(/^I click button "([^"]*)"$/) do |arg|
+    click_on(arg)
+end
+
 Given(/^I close the browser$/) do
    page.execute_script "window.close();"
 end
